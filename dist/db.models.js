@@ -9,14 +9,14 @@ var mongooseUniqueValidator = require('mongoose-unique-validator'); // SCHEMA BL
 
 
 var saccoSchema = new _mongoose.Schema({
-  _id: _mongoose["default"].Schema.Types.ObjectId,
+  // _id: Schema.Types.ObjectId,
   name: {
     type: String,
     required: true
   },
   address: {
-    type: String,
-    required: false
+    type: String // required: false
+
   },
   registration_number: {
     type: String,
@@ -51,14 +51,13 @@ var saccoSchema = new _mongoose.Schema({
 }); // RIDER SCHEMA
 
 var riderSchema = new _mongoose.Schema({
-  _id: _mongoose["default"].Schema.Types.ObjectId,
-  // hashed
+  // _id: Schema.Types.ObjectId,// hashed
   name: {
     first_name: {
       type: String,
       required: true
     },
-    surname: {
+    sur_name: {
       type: String,
       required: true
     },
@@ -77,7 +76,7 @@ var riderSchema = new _mongoose.Schema({
   },
   passport_photo: {
     type: Buffer,
-    required: true
+    required: false
   },
   license_number: {
     type: String,
@@ -85,18 +84,20 @@ var riderSchema = new _mongoose.Schema({
     unique: true
   },
   insurance: {
-    Number: {
+    number: {
       type: String,
-      required: true,
+      // required: true,
       unique: true
     },
     issue_date: {
       type: Date,
-      required: true
+      // required: false,
+      "default": Date.now
     },
     exp_date: {
       type: Date,
-      required: true
+      required: false,
+      "default": Date.now
     }
   },
   // revisit
@@ -131,7 +132,7 @@ var riderSchema = new _mongoose.Schema({
   }],
   // THIS IS WHERE WE REFERENCE THE RIDER TO THEIR RESPECTIVE SACCOS
   sacco: {
-    type: _mongoose["default"].Schema.Types.ObjectId,
+    type: _mongoose.Schema.Types.ObjectId,
     ref: 'Sacco'
   }
 }); // USING PLUGINS T
@@ -142,7 +143,8 @@ riderSchema.plugin(mongooseUniqueValidator); // CREATING AND SAVING MONGOOSE MOD
 
 var Sacco = _mongoose["default"].model('Sacco', saccoSchema);
 
-var Rider = _mongoose["default"].model('Rider', riderSchema);
+var Rider = _mongoose["default"].model('Rider', riderSchema); // ++INSERTING SOME DATA INTO THE DATABASE++
+
 
 module.exports = {
   Sacco: Sacco,

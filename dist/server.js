@@ -49,11 +49,155 @@ var processQuery = qpm({
 });
 app.use(bodyParser.json()); // mongoose models
 
-// OUR SERVER CODE WILL GO HEREa
+// OUR SERVER CODE WILL GO HERE
+// BASIC CRUD APIS
 app.get('/', function (req, res) {
   res.json("this is our first server page");
 });
-var db = null;
+app.post("/api/riders", function (req, res) {
+  var new_rider = new _dbModels.Rider(req.body);
+  new_rider.save().then(function (rider) {
+    console.log({
+      message: "The rider was added successfully"
+    });
+    res.status(200).json({
+      rider: rider
+    });
+  })["catch"](function (error) {
+    res.status(400).send({
+      message: "Unable to add the rider: ".concat(error)
+    });
+  });
+});
+app.post("/api/saccos", function (req, res) {
+  console.log(req.body);
+  var new_sacco = new _dbModels.Sacco(req.body); // if (!new_sacco._id) new_sacco._id = Schema.Types.ObjectId;
+
+  new_sacco.save().then(function (sacco) {
+    console.log({
+      message: "The sacco was added successfully"
+    });
+    res.status(200).json({
+      sacco: sacco
+    });
+  })["catch"](function (err) {
+    res.status(400).send({
+      message: "Unable to add the sacco: ".concat(err)
+    });
+  });
+});
+/* GET ALL RIDERS */
+
+app.get('/api/riders', function (req, res) {
+  _dbModels.Rider.find().then(function (rider) {
+    if (!rider) res.status(404).json({
+      message: "No avilable Riders in the system"
+    });else res.json(rider);
+  })["catch"](function (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error: ".concat(error)
+    });
+  });
+});
+/* GET SINGLE RIDER BY ID */
+
+app.get('api/riders/:id', function (req, res) {
+  var riders_id;
+
+  try {
+    riders_id = new ObjectId(req.params.id);
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid riders ID:".concat(riders_id)
+    });
+  }
+
+  _dbModels.Rider.findById({
+    _id: riders_id
+  }).then(function (rider) {
+    if (!rider) res.status(404).json({
+      message: "No such Rider: ".concat(riders_id)
+    });else res.json(rider);
+  })["catch"](function (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error: ".concat(error)
+    });
+  });
+
+  0;
+});
+/* SAVE RIDERS */
+
+app.post('api/riders', function (req, res) {
+  var new_rider = req.body;
+
+  _dbModels.Rider.create(new_rider).then(function (result) {
+    _dbModels.Rider.findById({
+      _id: result.insertedId
+    }).then(function (added_rider) {
+      res.json(added_rider);
+    });
+  })["catch"](function (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error: ".concat(error)
+    });
+  });
+});
+/* UPDATE PRODUCT */
+
+app.put('api/riders/:id', function (req, res) {
+  var riders_id;
+
+  try {
+    riders_id = new ObjectId(req.params.id);
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid riders ID:".concat(riders_id)
+    });
+  }
+
+  var new_rider = req.body;
+
+  _dbModels.Rider.findByIdAndUpdate({
+    _id: riders_id
+  }, new_rider).find({
+    _id: riders_id
+  }).then(function (updated_rider) {
+    res.json(updated_rider);
+  })["catch"](function (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Unable to update the riders information ".concat(err)
+    });
+  });
+});
+/* DELETE PRODUCT */
+
+app["delete"]('api/riders/:id', function (req, res) {
+  var riders_id;
+
+  try {
+    riders_id = new ObjectId(req.params.id);
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid riders ID:".concat(riders_id)
+    });
+  } // THE REQ.BODY IS OPTIONAL INTHE FINDBYIDANREMOVE METHOD
+
+
+  _dbModels.Rider.findByIdAndRemove({
+    _id: riders_id
+  }, req.body).then(function (result) {
+    res.json(result);
+  })["catch"](function (err) {
+    console.log({
+      message: "Unable to delelete the riders profile ".concat(err)
+    });
+  });
+}); //creating a connection to mongoose
 
 _mongoose["default"].connect('mongodb://127.0.0.1:27017/fika-safe', {
   useNewUrlParser: true
