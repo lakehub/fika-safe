@@ -21,7 +21,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // mounting other middlewares into our server.js
-app.use(express.static('static'));
+// app.use(express.static('static'));
 
 
 var qpm = require('query-params-mongo');
@@ -135,7 +135,52 @@ app.put('api/riders/:id', (req, res) => {
 
     });
 });
+// Sacco APIs
+app.get('/api/saccos', (req, res) => {
+    Sacco.find().then((saccos) => {
+        res.status(200).send(saccos)
+    }).catch((error) => {
+        res.send(`Internal server error ${err.stck}`).status(400);
+    });
+    app.get('/api/saccos/:id', (req, res) => {
+        let sacco_id;
+        try {
+            sacco_id = req.params.id;
+        } catch (error) {
+            res.json({ message: `Invalid sacco id${error}` })
+        }
+        Sacco.findById({ _id: sacco_id }).then((sacco) => {
+            res.json(sacco).status(200);
+        }).catch((err) => {
+            res.send(`Internal server error${err.stack}`).status(400);
+        });
+    })
 
+    app.post('api/saccos', (req, res) => {
+        let new_sacco = req.body;
+        Sacco.create(new_sacco).then((result) => {
+            Sacco.findById({ _id: result.insertedId }).then((added_sacco => {
+                res.json(added_sacco);
+            }))
+        }).catch(error => {
+            console.log(error);
+            res.status(500).json({ message: `Internal Server Error: ${error}` });
+        });
+    });
+    app.delete(`/api/saccos/:id`, (req, res) => {
+        Sacco.remove({
+            _id = req.params.id
+        },
+            (err, sacco) => {
+                if (err) {
+                    res.send(err)
+                } res.json({
+                    status: "success",
+                    message: 'Sacco deleted'
+                })
+            })
+    })
+})
 
 
 /* DELETE PRODUCT */
@@ -161,9 +206,13 @@ app.delete('api/riders/:id', (req, res) => {
 //creating a connection to mongoose
 
 mongoose.connect('mongodb://127.0.0.1:27017/fika-safe', { useNewUrlParser: true })
-    .then(async () => {
+    .then(() => {
         app.listen(3000, () => {
             console.log("Listening on port 3000")
         });
-    });
+    })
+    .catch((error) => {
+        console.log({ message: `Unable to establish a connection to the server ${error}` })
+    })
+
 
