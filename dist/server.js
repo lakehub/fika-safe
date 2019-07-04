@@ -12,8 +12,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// import queryString from 'query-String'
-require("babel-polyfill"); // UNIQUE VALIDATOR
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+require('babel-polyfill'); // UNIQUE VALIDATOR
 
 
 var mongooseUniqueValidator = require('mongoose-unique-validator');
@@ -48,6 +51,9 @@ app.use(bodyParser.json()); // mongoose models
 
 // OUR SERVER CODE WILL GO HERE
 // BASIC CRUD APIS
+app.get('/', function (req, res) {
+  res.json("this is our first server page");
+});
 app.post("/api/riders", function (req, res) {
   var new_rider = new _dbModels.Rider(req.body);
   new_rider.save().then(function (rider) {
@@ -191,34 +197,28 @@ app["delete"]('api/riders/:id', function (req, res) {
       message: "Unable to delelete the riders profile ".concat(err)
     });
   });
-});
-app.get('/', function (req, res) {
-  res.json("this is our first server page");
 }); //creating a connection to mongoose
-// mongoose.connect('mongodb://127.0.0.1:27017/fika-safe', { useNewUrlParser: true });
-// const connection = mongoose.connection;
-// connection.once('open', () => {
-//     console.log(`mongodb connected successfully`);
-// });
-// app.listen(3000, () => {
-//     console.log("Listen000ing on port 3000")
-// });
 
 _mongoose["default"].connect('mongodb://127.0.0.1:27017/fika-safe', {
   useNewUrlParser: true
-}).then(function () {
-  app.listen(3000, function () {
-    console.log("Listening on port 3000");
-  });
-})["catch"](function (err) {
-  console.log(err.stack);
-}); // mongoose.connect('mongodb://localhost/fika-safe').then((client) => {
-//     db = client.db('fika-safe');
-//     // START THE SERVER
-//     app.listen(3000, () => {
-//         console.log("Listening on port 3001")
-//     });
-// }).catch((err) => {
-//     console.log(err.stack);
-// });
+}).then(
+/*#__PURE__*/
+_asyncToGenerator(
+/*#__PURE__*/
+regeneratorRuntime.mark(function _callee() {
+  return regeneratorRuntime.wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          app.listen(3000, function () {
+            console.log("Listening on port 3000");
+          });
+
+        case 1:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _callee);
+})));
 //# sourceMappingURL=server.js.map

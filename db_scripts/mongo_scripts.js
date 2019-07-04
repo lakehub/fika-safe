@@ -170,9 +170,9 @@ let sacco1 = new Sacco({
 })
 let rider1 = new Rider({
     "name": {
-        "first_name": 'Cyrus',
-        "sur_name": 'Arap',
-        "last_name: 'Kiprop'
+        "first_name": "Cyrus",
+        "sur_name": "Arap",
+        "last_name": "Kiprop"
     },
     "telephone_number": 726158347,
     "address": 'Kisumu',

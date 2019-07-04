@@ -3,7 +3,7 @@ import sourceMapSupport from 'source-map-support'
 import { MongoClient } from 'mongodb';
 import mongoose from "mongoose";
 import { Schema } from "mongoose";
-require("babel-polyfill");
+require('babel-polyfill');
 
 
 
@@ -42,6 +42,11 @@ import { Sacco, Rider } from './db.models.js'
 // OUR SERVER CODE WILL GO HERE
 
 // BASIC CRUD APIS
+
+app.get('/', (req, res) => {
+    res.json(`this is our first server page`);
+})
+
 app.post(`/api/riders`, (req, res) => {
     const new_rider = new Rider(req.body);
     new_rider.save()
@@ -67,6 +72,7 @@ app.post(`/api/saccos`, (req, res) => {
             res.status(400).send({ message: `Unable to add the sacco: ${err}` });
         });
 });
+
 
 /* GET ALL RIDERS */
 app.get('/api/riders', (req, res) => {
@@ -149,45 +155,15 @@ app.delete('api/riders/:id', (req, res) => {
 });
 
 
-app.get('/', (req, res) => {
-    res.json(`this is our first server page`);
-})
+
 
 
 //creating a connection to mongoose
 
-// mongoose.connect('mongodb://127.0.0.1:27017/fika-safe', { useNewUrlParser: true });
-// const connection = mongoose.connection;
-// connection.once('open', () => {
-//     console.log(`mongodb connected successfully`);
-// });
-
-// app.listen(3000, () => {
-//     console.log("Listen000ing on port 3000")
-// });
-
 mongoose.connect('mongodb://127.0.0.1:27017/fika-safe', { useNewUrlParser: true })
-    .then(() => {
+    .then(async () => {
         app.listen(3000, () => {
             console.log("Listening on port 3000")
-        })
-    })
-    .catch((err) => {
-        console.log(err.stack);
-    })
-
-
-
-
-// mongoose.connect('mongodb://localhost/fika-safe').then((client) => {
-//     db = client.db('fika-safe');
-
-//     // START THE SERVER
-//     app.listen(3000, () => {
-//         console.log("Listening on port 3001")
-//     });
-// }).catch((err) => {
-//     console.log(err.stack);
-
-// });
+        });
+    });
 
