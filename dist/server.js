@@ -6,12 +6,16 @@ var _mongodb = require("mongodb");
 
 var _mongoose = _interopRequireWildcard(require("mongoose"));
 
+var _dbModels = require("./db.models.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj["default"] = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import queryString from 'query-String'
-// UNIQUE VALIDATOR
+require("babel-polyfill"); // UNIQUE VALIDATOR
+
+
 var mongooseUniqueValidator = require('mongoose-unique-validator');
 
 var ObjectId = require('mongodb').ObjectID;
@@ -40,165 +44,181 @@ var processQuery = qpm({
     objectId: mongodb.ObjectID
   }
 });
-app.use(bodyParser.json()); // OUR SERVER CODE WILL GO HEREa
+app.use(bodyParser.json()); // mongoose models
 
+// OUR SERVER CODE WILL GO HERE
+// BASIC CRUD APIS
+app.post("/api/riders", function (req, res) {
+  var new_rider = new _dbModels.Rider(req.body);
+  new_rider.save().then(function (rider) {
+    console.log({
+      message: "The rider was added successfully"
+    });
+    res.status(200).json({
+      rider: rider
+    });
+  })["catch"](function (error) {
+    res.status(400).send({
+      message: "Unable to add the rider: ".concat(error)
+    });
+  });
+});
+app.post("/api/saccos", function (req, res) {
+  console.log(req.body);
+  var new_sacco = new _dbModels.Sacco(req.body); // if (!new_sacco._id) new_sacco._id = Schema.Types.ObjectId;
+
+  new_sacco.save().then(function (sacco) {
+    console.log({
+      message: "The sacco was added successfully"
+    });
+    res.status(200).json({
+      sacco: sacco
+    });
+  })["catch"](function (err) {
+    res.status(400).send({
+      message: "Unable to add the sacco: ".concat(err)
+    });
+  });
+});
+/* GET ALL RIDERS */
+
+app.get('/api/riders', function (req, res) {
+  _dbModels.Rider.find().then(function (rider) {
+    if (!rider) res.status(404).json({
+      message: "No avilable Riders in the system"
+    });else res.json(rider);
+  })["catch"](function (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error: ".concat(error)
+    });
+  });
+});
+/* GET SINGLE RIDER BY ID */
+
+app.get('api/riders/:id', function (req, res) {
+  var riders_id;
+
+  try {
+    riders_id = new ObjectId(req.params.id);
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid riders ID:".concat(riders_id)
+    });
+  }
+
+  _dbModels.Rider.findById({
+    _id: riders_id
+  }).then(function (rider) {
+    if (!rider) res.status(404).json({
+      message: "No such Rider: ".concat(riders_id)
+    });else res.json(rider);
+  })["catch"](function (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error: ".concat(error)
+    });
+  });
+
+  0;
+});
+/* SAVE RIDERS */
+
+app.post('api/riders', function (req, res) {
+  var new_rider = req.body;
+
+  _dbModels.Rider.create(new_rider).then(function (result) {
+    _dbModels.Rider.findById({
+      _id: result.insertedId
+    }).then(function (added_rider) {
+      res.json(added_rider);
+    });
+  })["catch"](function (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error: ".concat(error)
+    });
+  });
+});
+/* UPDATE PRODUCT */
+
+app.put('api/riders/:id', function (req, res) {
+  var riders_id;
+
+  try {
+    riders_id = new ObjectId(req.params.id);
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid riders ID:".concat(riders_id)
+    });
+  }
+
+  var new_rider = req.body;
+
+  _dbModels.Rider.findByIdAndUpdate({
+    _id: riders_id
+  }, new_rider).find({
+    _id: riders_id
+  }).then(function (updated_rider) {
+    res.json(updated_rider);
+  })["catch"](function (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Unable to update the riders information ".concat(err)
+    });
+  });
+});
+/* DELETE PRODUCT */
+
+app["delete"]('api/riders/:id', function (req, res) {
+  var riders_id;
+
+  try {
+    riders_id = new ObjectId(req.params.id);
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid riders ID:".concat(riders_id)
+    });
+  } // THE REQ.BODY IS OPTIONAL INTHE FINDBYIDANREMOVE METHOD
+
+
+  _dbModels.Rider.findByIdAndRemove({
+    _id: riders_id
+  }, req.body).then(function (result) {
+    res.json(result);
+  })["catch"](function (err) {
+    console.log({
+      message: "Unable to delelete the riders profile ".concat(err)
+    });
+  });
+});
 app.get('/', function (req, res) {
   res.json("this is our first server page");
-}); // SCHEMA BLUEPRINTS
-
-var saccoSchema = new _mongoose.Schema({
-  _id: _mongoose["default"].Schema.Types.ObjectId,
-  name: {
-    type: String,
-    required: true
-  },
-  address: {
-    type: String,
-    required: false
-  },
-  registration_number: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  contacts: {
-    email: {
-      type: String,
-      unique: true,
-      required: true
-    },
-    telephone_number: {
-      type: String,
-      required: true,
-      unique: true
-    }
-  },
-  about: {
-    description: String,
-    website: {
-      type: String,
-      validate: {
-        validator: function validator(link) {
-          return link.indexOf('https://') === 0;
-        },
-        message: 'Webpage URL must start with https://'
-      }
-    } // ....
-
-  }
-}); // rider scheam
-
-var riderSchema = new _mongoose.Schema({
-  _id: _mongoose["default"].Schema.Types.ObjectId,
-  // hashed
-  name: {
-    first_name: {
-      type: String,
-      required: true
-    },
-    surname: {
-      type: String,
-      required: true
-    },
-    last_name: {
-      type: String,
-      required: true
-    }
-  },
-  telephone_number: {
-    type: Number,
-    required: true
-  },
-  address: {
-    type: String,
-    required: true
-  },
-  passport_photo: {
-    type: Buffer,
-    required: true
-  },
-  license_number: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  insurance: {
-    Number: {
-      type: String,
-      required: true,
-      unique: true
-    },
-    issue_date: {
-      type: Date,
-      required: true
-    },
-    exp_date: {
-      type: Date,
-      required: true
-    }
-  },
-  // revisit
-  passport_ID: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  number_plate: {
-    type: String,
-    required: true,
-    unique: true,
-    validate: {
-      validator: function validator(text) {
-        return text.indexOf('K') === 0;
-      },
-      message: 'Invalid number plate'
-    }
-  },
-  created: {
-    type: Date,
-    "default": Date.now
-  },
-  // react states
-  isActive: {
-    type: Boolean,
-    "default": true
-  },
-  // TODO challenge on how to implement ratings on the riders
-  ratings: [{
-    numberOfStars: Number
-  }],
-  // THIS IS WHERE WE REFERENCE THE RIDER TO THEIR RESPECTIVE SACCOS
-  sacco: {
-    type: _mongoose["default"].Schema.Types.ObjectId,
-    ref: 'Sacco'
-  }
-}); // USING PLUGINS T
-
-saccoSchema.plugin(mongooseUniqueValidator);
-riderSchema.plugin(mongooseUniqueValidator); // CREATING AND SAVING MONGOOSE MODEL 
-// THIS CAN ALSO BE EXPORTED TO ANOTHER MODULARISED FILE
-
-var Sacco = _mongoose["default"].model('Sacco', saccoSchema);
-
-var Rider = _mongoose["default"].model('Rider', riderSchema);
-
-var db = null; // Initialize connection once
-// MongoClient.connect("mongodb://localhost:27017/test", (err, client) => {
-//     if (err) throw err;
-//     db = client.db('test');
-//     // Start the application after the database connection is ready
-//     app.listen(3000, () => {
-//         console.log("Listening on port 3001")
-//     });
+}); //creating a connection to mongoose
+// mongoose.connect('mongodb://127.0.0.1:27017/fika-safe', { useNewUrlParser: true });
+// const connection = mongoose.connection;
+// connection.once('open', () => {
+//     console.log(`mongodb connected successfully`);
+// });
+// app.listen(3000, () => {
+//     console.log("Listen000ing on port 3000")
 // });
 
-_mongoose["default"].connect('mongodb://localhost/fika-safe').then(function (client) {
-  db = client.db('fika-safe'); // START THE SERVER
-
+_mongoose["default"].connect('mongodb://127.0.0.1:27017/fika-safe', {
+  useNewUrlParser: true
+}).then(function () {
   app.listen(3000, function () {
-    console.log("Listening on port 3001");
+    console.log("Listening on port 3000");
   });
 })["catch"](function (err) {
   console.log(err.stack);
-});
+}); // mongoose.connect('mongodb://localhost/fika-safe').then((client) => {
+//     db = client.db('fika-safe');
+//     // START THE SERVER
+//     app.listen(3000, () => {
+//         console.log("Listening on port 3001")
+//     });
+// }).catch((err) => {
+//     console.log(err.stack);
+// });
 //# sourceMappingURL=server.js.map
