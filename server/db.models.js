@@ -6,14 +6,14 @@ const mongooseUniqueValidator = require('mongoose-unique-validator');
 
 // SCHEMA BLUEPRINTS
 const saccoSchema = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    // _id: Schema.Types.ObjectId,
     name: {
         type: String,
         required: true
     },
     address: {
         type: String,
-        required: false
+        // required: false
     },
     registration_number: {
         type: String,
@@ -50,13 +50,13 @@ const saccoSchema = new Schema({
 
 // RIDER SCHEMA
 const riderSchema = new Schema({
-    _id: mongoose.Schema.Types.ObjectId,// hashed
+    // _id: Schema.Types.ObjectId,// hashed
     name: {
         first_name: {
             type: String,
             required: true
         },
-        surname: {
+        sur_name: {
             type: String,
             required: true
         },
@@ -75,7 +75,7 @@ const riderSchema = new Schema({
     },
     passport_photo: {
         type: Buffer,
-        required: true
+        required: false
     },
     license_number: {
         type: String,
@@ -83,18 +83,20 @@ const riderSchema = new Schema({
         unique: true
     },
     insurance: {
-        Number: {
+        number: {
             type: String,
-            required: true,
+            // required: true,
             unique: true
         },
         issue_date: {
             type: Date,
-            required: true,
+            // required: false,
+            default: Date.now
         },
         exp_date: {
             type: Date,
-            required: true,
+            required: false,
+            default: Date.now
         }
     },
     // revisit
@@ -133,7 +135,7 @@ const riderSchema = new Schema({
     ],
     // THIS IS WHERE WE REFERENCE THE RIDER TO THEIR RESPECTIVE SACCOS
     sacco: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Sacco'
     },
 
@@ -146,6 +148,9 @@ riderSchema.plugin(mongooseUniqueValidator);
 // THIS CAN ALSO BE EXPORTED TO ANOTHER MODULARISED FILE
 const Sacco = mongoose.model('Sacco', saccoSchema);
 const Rider = mongoose.model('Rider', riderSchema);
+
+// ++INSERTING SOME DATA INTO THE DATABASE++
+
 
 module.exports = {
     Sacco,
