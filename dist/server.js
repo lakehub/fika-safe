@@ -2,8 +2,6 @@
 
 var _sourceMapSupport = _interopRequireDefault(require("source-map-support"));
 
-var _mongodb = require("mongodb");
-
 var _mongoose = _interopRequireWildcard(require("mongoose"));
 
 var _dbModels = require("./db.models.js");
@@ -12,14 +10,10 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-require('babel-polyfill'); // UNIQUE VALIDATOR
-
-
-var mongooseUniqueValidator = require('mongoose-unique-validator');
+// import queryString from 'query-String'
+// import { MongoClient } from 'mongodb';
+// mongoose models
+require('babel-polyfill');
 
 var ObjectId = require('mongodb').ObjectID;
 
@@ -31,8 +25,7 @@ var bodyParser = require('body-parser'); // an instance of express
 
 
 var app = express(); // mounting other middlewares into our server.js
-
-app.use(express["static"]('static'));
+// app.use(express.static('static'));
 
 var qpm = require('query-params-mongo');
 
@@ -47,18 +40,17 @@ var processQuery = qpm({
     objectId: mongodb.ObjectID
   }
 });
-app.use(bodyParser.json()); // mongoose models
-
-// OUR SERVER CODE WILL GO HERE
+app.use(bodyParser.json()); // OUR SERVER CODE WILL GO HERE
 // BASIC CRUD APIS
+
 app.get('/', function (req, res) {
-  res.json("this is our first server page");
+  res.json('this is our first server page');
 });
-app.post("/api/riders", function (req, res) {
-  var new_rider = new _dbModels.Rider(req.body);
-  new_rider.save().then(function (rider) {
+app.post('/api/riders', function (req, res) {
+  var newRider = new _dbModels.Rider(req.body);
+  newRider.save().then(function (rider) {
     console.log({
-      message: "The rider was added successfully"
+      message: 'The rider was added successfully'
     });
     res.status(200).json({
       rider: rider
@@ -69,13 +61,13 @@ app.post("/api/riders", function (req, res) {
     });
   });
 });
-app.post("/api/saccos", function (req, res) {
+app.post('/api/saccos', function (req, res) {
   console.log(req.body);
-  var new_sacco = new _dbModels.Sacco(req.body); // if (!new_sacco._id) new_sacco._id = Schema.Types.ObjectId;
+  var newSacco = new _dbModels.Sacco(req.body); // if (!new_sacco._id) new_sacco._id = Schema.Types.ObjectId;
 
-  new_sacco.save().then(function (sacco) {
+  newSacco.save().then(function (sacco) {
     console.log({
-      message: "The sacco was added successfully"
+      message: 'The sacco was added successfully'
     });
     res.status(200).json({
       sacco: sacco
@@ -91,7 +83,7 @@ app.post("/api/saccos", function (req, res) {
 app.get('/api/riders', function (req, res) {
   _dbModels.Rider.find().then(function (rider) {
     if (!rider) res.status(404).json({
-      message: "No avilable Riders in the system"
+      message: 'No avilable Riders in the system'
     });else res.json(rider);
   })["catch"](function (error) {
     console.log(error);
@@ -103,21 +95,21 @@ app.get('/api/riders', function (req, res) {
 /* GET SINGLE RIDER BY ID */
 
 app.get('api/riders/:id', function (req, res) {
-  var riders_id;
+  var ridersId;
 
   try {
-    riders_id = new ObjectId(req.params.id);
+    ridersId = new ObjectId(req.params.id);
   } catch (error) {
     res.status(400).send({
-      message: "Invalid riders ID:".concat(riders_id)
+      message: "Invalid riders ID:".concat(ridersId)
     });
   }
 
   _dbModels.Rider.findById({
-    _id: riders_id
+    _id: ridersId
   }).then(function (rider) {
     if (!rider) res.status(404).json({
-      message: "No such Rider: ".concat(riders_id)
+      message: "No such Rider: ".concat(ridersId)
     });else res.json(rider);
   })["catch"](function (error) {
     console.log(error);
@@ -125,19 +117,17 @@ app.get('api/riders/:id', function (req, res) {
       message: "Internal Server Error: ".concat(error)
     });
   });
-
-  0;
 });
 /* SAVE RIDERS */
 
 app.post('api/riders', function (req, res) {
-  var new_rider = req.body;
+  var newRider = req.body;
 
-  _dbModels.Rider.create(new_rider).then(function (result) {
+  _dbModels.Rider.create(newRider).then(function (result) {
     _dbModels.Rider.findById({
       _id: result.insertedId
-    }).then(function (added_rider) {
-      res.json(added_rider);
+    }).then(function (addedRider) {
+      res.json(addedRider);
     });
   })["catch"](function (error) {
     console.log(error);
@@ -149,24 +139,24 @@ app.post('api/riders', function (req, res) {
 /* UPDATE PRODUCT */
 
 app.put('api/riders/:id', function (req, res) {
-  var riders_id;
+  var ridersId;
 
   try {
-    riders_id = new ObjectId(req.params.id);
+    ridersId = new ObjectId(req.params.id);
   } catch (error) {
     res.status(400).send({
-      message: "Invalid riders ID:".concat(riders_id)
+      message: "Invalid riders ID:".concat(ridersId)
     });
   }
 
-  var new_rider = req.body;
+  var newRider = req.body;
 
   _dbModels.Rider.findByIdAndUpdate({
-    _id: riders_id
-  }, new_rider).find({
-    _id: riders_id
-  }).then(function (updated_rider) {
-    res.json(updated_rider);
+    _id: ridersId
+  }, newRider).find({
+    _id: ridersId
+  }).then(function (updatedRider) {
+    res.json(updatedRider);
   })["catch"](function (err) {
     console.log(err);
     res.status(500).json({
@@ -177,19 +167,19 @@ app.put('api/riders/:id', function (req, res) {
 /* DELETE PRODUCT */
 
 app["delete"]('api/riders/:id', function (req, res) {
-  var riders_id;
+  var ridersId;
 
   try {
-    riders_id = new ObjectId(req.params.id);
+    ridersId = new ObjectId(req.params.id);
   } catch (error) {
     res.status(400).send({
-      message: "Invalid riders ID:".concat(riders_id)
+      message: "Invalid riders ID:".concat(ridersId)
     });
   } // THE REQ.BODY IS OPTIONAL INTHE FINDBYIDANREMOVE METHOD
 
 
   _dbModels.Rider.findByIdAndRemove({
-    _id: riders_id
+    _id: ridersId
   }, req.body).then(function (result) {
     res.json(result);
   })["catch"](function (err) {
@@ -197,28 +187,110 @@ app["delete"]('api/riders/:id', function (req, res) {
       message: "Unable to delelete the riders profile ".concat(err)
     });
   });
-}); //creating a connection to mongoose
+}); // THIS IS THE SACCOS APIS
+// get all saccos
+
+app.get('/api/saccos', function (req, res) {
+  _dbModels.Sacco.find().then(function (saccos) {
+    res.status(200).send(saccos);
+  })["catch"](function (err) {
+    res.send("Internal server error".concat(err.stack)).status(400);
+  });
+});
+app.get('/api/saccos/:id', function (req, res) {
+  // parameter
+  var saccoId;
+
+  try {
+    saccoId = req.params.id;
+  } catch (error) {
+    res.json({
+      message: "Invalid sacco id ".concat(error)
+    });
+  }
+
+  _dbModels.Sacco.findById({
+    _id: saccoId
+  }).then(function (sacco) {
+    res.json(sacco).status(200);
+  })["catch"](function (err) {
+    res.send("Internal server error".concat(err.stack)).status(400);
+  });
+}); // post api
+
+app.post('api/saccos', function (req, res) {
+  var newSacco = req.body;
+
+  _dbModels.Sacco.create(newSacco).then(function (result) {
+    _dbModels.Sacco.findById({
+      _id: result.insertedId
+    }).then(function (addedSacco) {
+      res.json(addedSacco);
+    });
+  })["catch"](function (error) {
+    res.status(500).json({
+      message: "Internal Server Error: ".concat(error)
+    });
+  });
+});
+app["delete"]('api/saccos/:id', function (req, res) {
+  var saccosId;
+
+  try {
+    saccosId = req.params.id;
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid saccos ID:".concat(saccosId)
+    });
+  } // THE REQ.BODY IS OPTIONAL INTHE FINDBYIDANREMOVE METHOD
+
+
+  _dbModels.Rider.findByIdAndRemove({
+    _id: saccosId
+  }, req.body).then(function (result) {
+    res.json(result);
+  })["catch"](function (err) {
+    console.log({
+      message: "Unable to delelete the saccos profile ".concat(err)
+    });
+  });
+});
+app.put('api/saccos/:id', function (req, res) {
+  var saccosId;
+
+  try {
+    saccosId = req.params.id;
+  } catch (error) {
+    res.status(400).send({
+      message: "Invalid saccos ID:".concat(saccosId)
+    });
+  }
+
+  var newSacco = req.body;
+
+  _dbModels.Sacco.findByIdAndUpdate({
+    _id: saccosId
+  }, newSacco).find({
+    _id: saccosId
+  }).then(function (updatedSacco) {
+    res.json(updatedSacco);
+  })["catch"](function (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Unable to update the saccos information ".concat(err)
+    });
+  });
+}); // creating a connection to mongoose
 
 _mongoose["default"].connect('mongodb://127.0.0.1:27017/fika-safe', {
   useNewUrlParser: true
-}).then(
-/*#__PURE__*/
-_asyncToGenerator(
-/*#__PURE__*/
-regeneratorRuntime.mark(function _callee() {
-  return regeneratorRuntime.wrap(function _callee$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          app.listen(3000, function () {
-            console.log("Listening on port 3000");
-          });
-
-        case 1:
-        case "end":
-          return _context.stop();
-      }
-    }
-  }, _callee);
-})));
+}).then(function () {
+  app.listen(3000, function () {
+    console.log('Listening on port 3000');
+  });
+})["catch"](function (error) {
+  console.log({
+    message: "Unable to establish a connection to the server ".concat(error)
+  });
+});
 //# sourceMappingURL=server.js.map
