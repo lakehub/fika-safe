@@ -156,6 +156,7 @@ app.delete('api/riders/:id', (req, res) => {
 //populating query
 //set for testing in the code
 //used with route
+//lets check it
 router.get('/sacco', (req,res,next) =>{
     Sacco.find().select('riders quantity _id')
     .populate('riders', 'name')
