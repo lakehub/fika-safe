@@ -167,6 +167,7 @@ router.get('/sacco', (req,res,next) =>{
                 return{
                     _id: rider._id,
                     riders: rider.riders,
+                    
                     quantity: rider.quantity,
                     request:{
                         type: 'GET',
