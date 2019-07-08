@@ -191,6 +191,29 @@ app.delete('api/riders/:id', (req, res) => {
     } catch (error) {
         res.status(400).send({ message: `Invalid riders ID:${riders_id}` });
     }
+    
+    apiRouter.route('/saccos/sacco_id')
+    .delete( function (req, res) {     // <===== defined inside 'put',
+    Sacco.remove({
+        _id: req.params.user_id
+    }, function (err, sacco) {
+        if (err) return res.send(err);
+        res.json({ message: 'Deleted' });
+    });
+})
+
+.delete( function (req, res) {  
+Rider.remove({
+    _id: req.params.user_id
+}, function (err, rider) {
+    if (err) return res.send(err);
+    res.json({ message: 'Deleted' });
+});
+});
+
+
+
+
     // THE REQ.BODY IS OPTIONAL INTHE FINDBYIDANREMOVE METHOD
     Rider.findByIdAndRemove({ _id: riders_id }, req.body).then((result) => {
         res.json(result)
