@@ -6,7 +6,7 @@ const mongooseUniqueValidator = require('mongoose-unique-validator');
 
 // SCHEMA BLUEPRINTS
 const saccoSchema = new Schema({
-  // _id: Schema.Types.ObjectId,
+
   name: {
     type: String,
     required: true,
@@ -49,7 +49,6 @@ const saccoSchema = new Schema({
 
 // RIDER SCHEMA
 const riderSchema = new Schema({
-  // _id: Schema.Types.ObjectId,// hashed
   name: {
     first_name: {
       type: String,
@@ -132,7 +131,7 @@ const riderSchema = new Schema({
   ],
   // THIS IS WHERE WE REFERENCE THE RIDER TO THEIR RESPECTIVE SACCOS
   sacco: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'Sacco',
   },
 
