@@ -19,7 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 // importing the modularized files from other directories
-import MaterialTableUi from './components/MaterialTable.jsx';
+import SaccoList from './components/SaccoList.jsx';
 import NavBar from './components/NavBar.jsx';
 
 // A LIBRARY TO REFERENCE ALL YOUR FONT AWESOME ICONS IN YOUR ENTIRE PROJECT
@@ -45,7 +45,7 @@ const RouteApp = () => (
       <Switch>
         <App>
           {/* injecting a router to issuefilter with the withROuter methods */}
-          <Route path="/saccos" exact component={MaterialTableUi} />
+          <Route path="/saccos" exact component={SaccoList} />
           {/* <Route path="/issues/:id" exact strict component={IssueEdit} /> */}
           {/* <Route path="*" component={NoMatch} /> */}
         </App>
