@@ -45,9 +45,9 @@ var saccoSchema = new _mongoose.Schema({
         },
         message: 'Webpage URL must start with https://'
       }
-    } // ....
+    }
+  } // ....
 
-  }
 }); // RIDER SCHEMA
 
 var riderSchema = new _mongoose.Schema({
@@ -138,7 +138,7 @@ var riderSchema = new _mongoose.Schema({
 }); // USING PLUGINS T
 
 saccoSchema.plugin(mongooseUniqueValidator);
-riderSchema.plugin(mongooseUniqueValidator); // CREATING AND SAVING MONGOOSE MODEL 
+riderSchema.plugin(mongooseUniqueValidator); // CREATING AND SAVING MONGOOSE MODEL
 // THIS CAN ALSO BE EXPORTED TO ANOTHER MODULARISED FILE
 
 var Sacco = _mongoose["default"].model('Sacco', saccoSchema);

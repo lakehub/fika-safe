@@ -1,150 +1,147 @@
-import mongoose from "mongoose";
-import { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
+
 
 // UNIQUE PROPERTY VALIDATOR
 const mongooseUniqueValidator = require('mongoose-unique-validator');
 
 // SCHEMA BLUEPRINTS
 const saccoSchema = new Schema({
-    // _id: Schema.Types.ObjectId,
-    name: {
-        type: String,
-        required: true
+  // _id: Schema.Types.ObjectId,
+  name: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    // required: false
+  },
+  registration_number: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  contacts: {
+    email: {
+      type: String,
+      unique: true,
+      required: true,
     },
-    address: {
-        type: String,
-        // required: false
+    telephone_number: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    registration_number: {
-        type: String,
-        required: true,
-        unique: true
-    }, contacts: {
-        email: {
-            type: String,
-            unique: true,
-            required: true
-        },
-        telephone_number: {
-            type: String,
-            required: true,
-            unique: true
-        }
+  },
+  about: {
+    description: String,
+    website: {
+      type: String,
+      validate: {
+        validator: link => link.indexOf('https://') === 0,
+        message: 'Webpage URL must start with https://',
+      },
     },
-    about: {
-        description: String,
-        website: {
-            type: String,
-            validate: {
-                validator: (link) => {
-                    return link.indexOf('https://') === 0;
-                },
-                message: 'Webpage URL must start with https://'
-            }
-        }
 
-    }
-    // ....
+  },
+  // ....
 
 });
 
 // RIDER SCHEMA
 const riderSchema = new Schema({
-    // _id: Schema.Types.ObjectId,// hashed
-    name: {
-        first_name: {
-            type: String,
-            required: true
-        },
-        sur_name: {
-            type: String,
-            required: true
-        },
-        last_name: {
-            type: String,
-            required: true
-        }
+  // _id: Schema.Types.ObjectId,// hashed
+  name: {
+    first_name: {
+      type: String,
+      required: true,
     },
-    telephone_number: {
-        type: Number,
-        required: true
+    sur_name: {
+      type: String,
+      required: true,
     },
-    address: {
-        type: String,
-        required: true
+    last_name: {
+      type: String,
+      required: true,
     },
-    passport_photo: {
-        type: Buffer,
-        required: false
+  },
+  telephone_number: {
+    type: Number,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  passport_photo: {
+    type: Buffer,
+    required: false,
+  },
+  license_number: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  insurance: {
+    number: {
+      type: String,
+      // required: true,
+      unique: true,
     },
-    license_number: {
-        type: String,
-        required: true,
-        unique: true
+    issue_date: {
+      type: Date,
+      // required: false,
+      default: Date.now,
     },
-    insurance: {
-        number: {
-            type: String,
-            // required: true,
-            unique: true
-        },
-        issue_date: {
-            type: Date,
-            // required: false,
-            default: Date.now
-        },
-        exp_date: {
-            type: Date,
-            required: false,
-            default: Date.now
-        }
+    exp_date: {
+      type: Date,
+      required: false,
+      default: Date.now,
     },
-    // revisit
-    passport_ID: {
-        type: String,
-        required: true,
-        unique: true
+  },
+  // revisit
+  passport_ID: {
+    type: String,
+    required: true,
+    unique: true,
 
-    },
-    number_plate: {
-        type: String,
-        required: true,
-        unique: true,
-        validate: {
-            validator: (text) => {
-                return text.indexOf('K') === 0;
-            },
-            message: 'Invalid number plate'
-        }
-
-    },
-    created: {
-        type: Date,
-        default: Date.now
-    },
-    // react states
-    isActive: {
-        type: Boolean,
-        default: true
-    },
-    // TODO challenge on how to implement ratings on the riders
-    ratings: [
-        {
-            numberOfStars: Number,
-        }
-    ],
-    // THIS IS WHERE WE REFERENCE THE RIDER TO THEIR RESPECTIVE SACCOS
-    sacco: {
-        type: Schema.Types.ObjectId,
-        ref: 'Sacco'
+  },
+  number_plate: {
+    type: String,
+    required: true,
+    unique: true,
+    validate: {
+      validator: text => text.indexOf('K') === 0,
+      message: 'Invalid number plate',
     },
 
-})
+  },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
+  // react states
+  isActive: {
+    type: Boolean,
+    default: true,
+  },
+  // TODO challenge on how to implement ratings on the riders
+  ratings: [
+    {
+      numberOfStars: Number,
+    },
+  ],
+  // THIS IS WHERE WE REFERENCE THE RIDER TO THEIR RESPECTIVE SACCOS
+  sacco: {
+    type: Schema.Types.ObjectId,
+    ref: 'Sacco',
+  },
+
+});
 // USING PLUGINS T
 saccoSchema.plugin(mongooseUniqueValidator);
 riderSchema.plugin(mongooseUniqueValidator);
 
-// CREATING AND SAVING MONGOOSE MODEL 
+// CREATING AND SAVING MONGOOSE MODEL
 // THIS CAN ALSO BE EXPORTED TO ANOTHER MODULARISED FILE
 const Sacco = mongoose.model('Sacco', saccoSchema);
 const Rider = mongoose.model('Rider', riderSchema);
@@ -153,6 +150,6 @@ const Rider = mongoose.model('Rider', riderSchema);
 
 
 module.exports = {
-    Sacco,
-    Rider
-}
+  Sacco,
+  Rider,
+};
