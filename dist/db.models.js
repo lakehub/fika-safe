@@ -9,7 +9,6 @@ var mongooseUniqueValidator = require('mongoose-unique-validator'); // SCHEMA BL
 
 
 var saccoSchema = new _mongoose.Schema({
-  // _id: Schema.Types.ObjectId,
   name: {
     type: String,
     required: true
@@ -51,7 +50,6 @@ var saccoSchema = new _mongoose.Schema({
 }); // RIDER SCHEMA
 
 var riderSchema = new _mongoose.Schema({
-  // _id: Schema.Types.ObjectId,// hashed
   name: {
     first_name: {
       type: String,
@@ -132,7 +130,7 @@ var riderSchema = new _mongoose.Schema({
   }],
   // THIS IS WHERE WE REFERENCE THE RIDER TO THEIR RESPECTIVE SACCOS
   sacco: {
-    type: _mongoose.Schema.Types.ObjectId,
+    type: _mongoose["default"].Schema.Types.ObjectId,
     ref: 'Sacco'
   }
 }); // USING PLUGINS T

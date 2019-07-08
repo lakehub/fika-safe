@@ -47,6 +47,7 @@ app.get('/', function (req, res) {
   res.json('this is our first server page');
 });
 app.post('/api/riders', function (req, res) {
+  if (req.body.insurance.issue_date) req.body.insurance.issue_date = new Date(req.body.insurance.issue_date);
   var newRider = new _dbModels.Rider(req.body);
   newRider.save().then(function (rider) {
     console.log({
@@ -191,8 +192,8 @@ app["delete"]('api/riders/:id', function (req, res) {
 // get all saccos
 
 app.get('/api/saccos', function (req, res) {
-  _dbModels.Sacco.find().then(function (saccos) {
-    res.status(200).send(saccos);
+  _dbModels.Sacco.find().exec().then(function (saccos) {
+    res.status(200).json(saccos);
   })["catch"](function (err) {
     res.send("Internal server error".concat(err.stack)).status(400);
   });
@@ -219,14 +220,10 @@ app.get('/api/saccos/:id', function (req, res) {
 }); // post api
 
 app.post('api/saccos', function (req, res) {
-  var newSacco = req.body;
-
-  _dbModels.Sacco.create(newSacco).then(function (result) {
-    _dbModels.Sacco.findById({
-      _id: result.insertedId
-    }).then(function (addedSacco) {
-      res.json(addedSacco);
-    });
+  var newSacco = new _dbModels.Sacco(req.body);
+  newSacco.save().then(function (addedSacco) {
+    // console.log(addedSacco);
+    res.status(200).json(addedSacco);
   })["catch"](function (error) {
     res.status(500).json({
       message: "Internal Server Error: ".concat(error)

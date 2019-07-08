@@ -41,6 +41,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api/riders', (req, res) => {
+  if (req.body.insurance.issue_date) req.body.insurance.issue_date = new Date(req.body.insurance.issue_date);
   const newRider = new Rider(req.body);
   newRider.save()
     .then((rider) => {
@@ -146,11 +147,13 @@ app.delete('api/riders/:id', (req, res) => {
 // THIS IS THE SACCOS APIS
 // get all saccos
 app.get('/api/saccos', (req, res) => {
-  Sacco.find().then((saccos) => {
-    res.status(200).send(saccos);
-  }).catch((err) => {
-    res.send(`Internal server error${err.stack}`).status(400);
-  });
+  Sacco.find()
+    .exec()
+    .then((saccos) => {
+      res.status(200).json(saccos);
+    }).catch((err) => {
+      res.send(`Internal server error${err.stack}`).status(400);
+    });
 });
 app.get('/api/saccos/:id', (req, res) => { // parameter
   let saccoId;
@@ -169,11 +172,10 @@ app.get('/api/saccos/:id', (req, res) => { // parameter
 
 // post api
 app.post('api/saccos', (req, res) => {
-  const newSacco = req.body;
-  Sacco.create(newSacco).then((result) => {
-    Sacco.findById({ _id: result.insertedId }).then(((addedSacco) => {
-      res.json(addedSacco);
-    }));
+  const newSacco = new Sacco(req.body);
+  newSacco.save().then((addedSacco) => {
+    // console.log(addedSacco);
+    res.status(200).json(addedSacco);
   }).catch((error) => {
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });

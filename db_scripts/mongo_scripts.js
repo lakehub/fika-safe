@@ -5,7 +5,7 @@ import mongoose, { Shema } from 'mongoose';
 // creates a new instance of connenction to the refereced database
 // establishes a connection to the database
 const saccoSchema = new Schema({
-  _id: false, // Schema.Types.ObjectId,
+  _id: mongoose.Schema.Types.ObjectId,
   name: {
     type: String,
     required: true,
@@ -151,37 +151,37 @@ db.issues.remove({});
 
 // ++MOCKDATA++
 const sacco1 = new Sacco({
-  name: 'Moms Sacco',
-  address: 'Lakehub',
-  registration_number: 'ADJSKHF3W4332K',
-  contacts: {
-    email: 'cyruskiprop254@gmail.com',
-    telephone_number: '0726158348',
+  "name": "Moms Saccco",
+  "address": "Lakehubs",
+  "registration_number": "ADJSKsdsHF3W4332K",
+  "contacts": {
+    "email": "cyruskipropdss254@gmail.com",
+    "telephone_number": "07267158348",
   },
-  about: {
-    description: 'thisis the first sacco to be inserted into the database',
-    website: 'https://www.google.com',
+  "about": {
+    "description": "thisis thdsse first sacco to be inserted into the database",
+    "website": "https://www.google.commm",
   },
 
 });
 const rider1 = new Rider({
-  name: {
-    first_name: 'Cyrus',
-    sur_name: 'Arap',
-    last_name: 'Kiprop',
+  "name": {
+    "first_name": "Cyrus",
+    "sur_name": "Arap",
+    "last_name": "Kiprop",
   },
-  telephone_number: 726158347,
-  address: 'Kisumu',
-  license_number: 'AKOLDJS8989',
-  insurance: {
-    number: '234ADSLSDADL',
-    issue_date: 'Date.now',
-    exp_date: 'Date.now',
+  "telephone_number": "0726158347",
+  "address": "Kisumu",
+  "license_number": "AKOLDJS8989",
+  "insurance": {
+    "number": "234ADSLSDADL",
+    "issue_date": "Date.now",
+    "exp_date": "Date.now",
   },
-  passport_ID: '31607309',
-  number_plate: 'KAT 4TH',
-  created: 'Date.now',
-  isActive: 'true',
-  ratings: '5',
-  sacco: 'sacco1',
+  "passport_ID": "31607309",
+  "number_plate": "KAT 4TH",
+  "created": "Date.now",
+  "isActive": "true",
+  "ratings": "5",
+  sacco: "sacco1",
 });
