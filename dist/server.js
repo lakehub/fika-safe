@@ -164,6 +164,64 @@ app.put('api/riders/:id', function (req, res) {
       message: "Unable to update the riders information ".concat(err)
     });
   });
+}); // Sacco APIs
+
+app.get('/api/saccos', function (req, res) {
+  _dbModels.Sacco.find().then(function (saccos) {
+    res.status(200).send(saccos);
+  })["catch"](function (error) {
+    res.send("Internal server error ".concat(err.stck)).status(400);
+  });
+
+  app.get('/api/saccos/:id', function (req, res) {
+    var sacco_id;
+
+    try {
+      sacco_id = req.params.id;
+    } catch (error) {
+      res.json({
+        message: "Invalid sacco id".concat(error)
+      });
+    }
+
+    _dbModels.Sacco.findById({
+      _id: sacco_id
+    }).then(function (sacco) {
+      res.json(sacco).status(200);
+    })["catch"](function (err) {
+      res.send("Internal server error".concat(err.stack)).status(400);
+    });
+  });
+  app.post('api/saccos', function (req, res) {
+    var new_sacco = req.body;
+
+    _dbModels.Sacco.create(new_sacco).then(function (result) {
+      _dbModels.Sacco.findById({
+        _id: result.insertedId
+      }).then(function (added_sacco) {
+        res.json(added_sacco);
+      });
+    })["catch"](function (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Internal Server Error: ".concat(error)
+      });
+    });
+  });
+  app["delete"]("/api/saccos/:id", function (req, res) {
+    _dbModels.Sacco.remove({
+      _id: req.params.id
+    }, function (err, sacco) {
+      if (err) {
+        res.send(err);
+      }
+
+      res.json({
+        status: "success",
+        message: 'Sacco deleted'
+      });
+    });
+  });
 });
 /* DELETE PRODUCT */
 

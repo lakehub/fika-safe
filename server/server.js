@@ -161,7 +161,7 @@ app.get('/api/saccos', (req, res) => {
     });
     app.delete(`/api/saccos/:id`, (req, res) => {
         Sacco.remove({
-            _id = req.params.id
+            _id : req.params.id
         },
             (err, sacco) => {
                 if (err) {
