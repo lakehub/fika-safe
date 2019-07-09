@@ -7,11 +7,7 @@ import mongoose from 'mongoose';
 
 import { Sacco, Rider } from './db.models.js';
 
-<<<<<<< HEAD
-const db = require('./database/keys').mongodbURI;
 
-=======
->>>>>>> disp-saccoData
 mongoose.set('useCreateIndex', true);
 
 require('babel-polyfill');
@@ -32,6 +28,7 @@ const app = express();
 
 const qpm = require('query-params-mongo');
 const mongodb = require('mongodb');
+const db = require('./database/keys').mongodbURI;
 
 const processQuery = qpm({
   autoDetect: [{ fieldPattern: /_id$/, dataType: 'objectId' }],
