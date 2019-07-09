@@ -19,6 +19,13 @@
     "lint:fix": "eslint '**/*.{js,jsx}' --fix",
     "lint1": "eslint --ext js,jsx src server webpack.config.js"
   },
+  "eslintConfig": {
+    "settings": {
+      "react": {
+        "version": "999.999.999"
+      }
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Cyrus-Kiprop/fika-safe.git"

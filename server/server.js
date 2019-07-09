@@ -7,7 +7,6 @@ import mongoose from 'mongoose';
 
 import { Sacco, Rider } from './db.models.js';
 
-const db = require('./database/keys').mongodbURI;
 
 mongoose.set('useCreateIndex', true);
 
@@ -29,6 +28,7 @@ const app = express();
 
 const qpm = require('query-params-mongo');
 const mongodb = require('mongodb');
+const db = require('./database/keys').mongodbURI;
 
 const processQuery = qpm({
   autoDetect: [{ fieldPattern: /_id$/, dataType: 'objectId' }],
@@ -105,7 +105,9 @@ app.get('api/riders/:id', (req, res) => {
 
 /* SAVE RIDERS */
 app.post('api/riders', (req, res) => {
+
   const newRider = req.body;
+
   Rider.create(newRider).then((result) => {
     Rider.findById({ _id: result.insertedId }).then(((addedRider) => {
       res.json(addedRider);

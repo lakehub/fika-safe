@@ -88,13 +88,13 @@ const riderSchema = new Schema({
     },
     issue_date: {
       type: Date,
-      // required: false,
-      default: Date.now,
+      required: true,
+      // default: new Date(),
     },
     exp_date: {
       type: Date,
-      required: false,
-      default: Date.now,
+      required: true,
+      // default: new Date(),
     },
   },
   // revisit
@@ -116,7 +116,7 @@ const riderSchema = new Schema({
   },
   created: {
     type: Date,
-    default: Date.now,
+    default: new Date(),
   },
   // react states
   isActive: {
