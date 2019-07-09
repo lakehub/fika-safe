@@ -1,10 +1,15 @@
 import sourceMapSupport from 'source-map-support';
 // import queryString from 'query-String'
 // import { MongoClient } from 'mongodb';
-import mongoose, { Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-// mongoose models
+// mongoose models    .
+
 import { Sacco, Rider } from './db.models.js';
+
+const db = require('./database/keys').mongodbURI;
+
+mongoose.set('useCreateIndex', true);
 
 require('babel-polyfill');
 
@@ -217,7 +222,7 @@ app.put('api/saccos/:id', (req, res) => {
 
 // creating a connection to mongoose
 
-mongoose.connect('mongodb://127.0.0.1:27017/fika-safe', { useNewUrlParser: true })
+mongoose.connect(db, { useNewUrlParser: true })
   .then(() => {
     app.listen(3000, () => {
       console.log('Listening on port 3000');
