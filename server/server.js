@@ -7,8 +7,11 @@ import mongoose from 'mongoose';
 
 import { Sacco, Rider } from './db.models.js';
 
+<<<<<<< HEAD
 const db = require('./database/keys').mongodbURI;
 
+=======
+>>>>>>> disp-saccoData
 mongoose.set('useCreateIndex', true);
 
 require('babel-polyfill');
@@ -105,7 +108,9 @@ app.get('api/riders/:id', (req, res) => {
 
 /* SAVE RIDERS */
 app.post('api/riders', (req, res) => {
+
   const newRider = req.body;
+
   Rider.create(newRider).then((result) => {
     Rider.findById({ _id: result.insertedId }).then(((addedRider) => {
       res.json(addedRider);
