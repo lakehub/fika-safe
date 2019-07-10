@@ -23,7 +23,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // mounting other middlewares into our server.js
-// app.use(express.static('static'));
+app.use(express.static('static'));
 
 
 const qpm = require('query-params-mongo');
@@ -158,6 +158,7 @@ app.get('/api/saccos', (req, res) => {
     .exec()
     .then((saccos) => {
       res.status(200).json(saccos);
+      console.log(saccos)
     }).catch((err) => {
       res.send(`Internal server error${err.stack}`).status(400);
     });
