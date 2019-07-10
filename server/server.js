@@ -9,6 +9,7 @@ import { Sacco, Rider } from './db.models.js';
 
 
 mongoose.set('useCreateIndex', true);
+mongoose.set('useFindAndModify', false);
 
 require('babel-polyfill');
 
@@ -189,15 +190,16 @@ app.post('api/saccos', (req, res) => {
   });
 });
 
-app.delete('api/saccos/:id', (req, res) => {
+app.delete('/api/saccos/:id', (req, res) => {
   let saccosId;
   try {
     saccosId = req.params.id;
+    console.log(saccosId)
   } catch (error) {
     res.status(400).send({ message: `Invalid saccos ID:${saccosId}` });
   }
   // THE REQ.BODY IS OPTIONAL INTHE FINDBYIDANREMOVE METHOD
-  Rider.findByIdAndRemove({ _id: saccosId }, req.body).then((result) => {
+  Sacco.findByIdAndRemove({ _id: saccosId }).then((result) => {
     res.json(result);
   }).catch((err) => {
     console.log({ message: `Unable to delelete the saccos profile ${err}` });
@@ -224,7 +226,7 @@ app.put('api/saccos/:id', (req, res) => {
 
 
 // creating a connection to mongoose
-
+// 'mongodb://localhost/fika-safe'
 mongoose.connect(db, { useNewUrlParser: true })
   .then(() => {
     app.listen(3000, () => {
