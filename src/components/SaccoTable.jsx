@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
 import {
   Table,
   TableBody,
@@ -26,12 +27,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SaccoTable({ data }) {
+export default function SaccoTable({ data, deleteSacco }) {
   const classes = useStyles();
   // console.log(data.data[0]);
   const Saccorow = data.map((sacco, index) => {
-    console.log(sacco);
-    return <SaccoRow key={index} sacco={sacco} />;
+    // console.log(sacco);
+    return <SaccoRow key={index} sacco={sacco} deleteSacco={deleteSacco} />;
   });
   // const issueRows = issues.map(issue => (
   //   <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue} />
@@ -43,6 +44,7 @@ export default function SaccoTable({ data }) {
         <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
+              <TableCell>...</TableCell>
               <TableCell>Name</TableCell>
               <TableCell align="right">Registration</TableCell>
               <TableCell align="right">&nbsp;Location</TableCell>

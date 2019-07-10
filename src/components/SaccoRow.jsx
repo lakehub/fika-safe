@@ -5,11 +5,16 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
+import EditIcon from './EditIcon.jsx';
+import CheckBox from './CheckBox.jsx';
 import DeleteIcon from './DeleteIcon.jsx';
 
-const SaccoRow = ({ sacco }) => {
+const SaccoRow = ({ sacco, deleteSacco }) => {
   return (
     <TableRow>
+      <TableCell align="left">
+        <CheckBox />
+      </TableCell>
       <TableCell component="th" scope="sacco">
         {sacco.name}
       </TableCell>
@@ -18,7 +23,10 @@ const SaccoRow = ({ sacco }) => {
       <TableCell align="left">{sacco.contacts.telephone_number}</TableCell>
       <TableCell align="left">{sacco._id}</TableCell>
       <TableCell align="left">
-        <DeleteIcon />
+        <DeleteIcon removeSacco={deleteSacco} id={sacco._id} />
+      </TableCell>
+      <TableCell align="left">
+        <EditIcon />
       </TableCell>
     </TableRow>
   );
