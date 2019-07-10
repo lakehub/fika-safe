@@ -225,7 +225,7 @@ app.put('api/saccos/:id', (req, res) => {
 
 // creating a connection to mongoose
 
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/fika-safe', { useNewUrlParser: true })
   .then(() => {
     app.listen(3000, () => {
       console.log('Listening on port 3000');
