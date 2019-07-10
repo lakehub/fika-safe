@@ -1,11 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper
+} from '@material-ui/core';
 
 import SaccoRow from './SaccoRow.jsx';
 
@@ -24,20 +26,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
-];
-
-export default function DenseTable() {
+export default function SaccoTable({ data }) {
   const classes = useStyles();
+  // console.log(data.data[0]);
+  const Saccorow = data.map((sacco, index) => {
+    console.log(sacco);
+    return <SaccoRow key={index} sacco={sacco} />;
+  });
+  // const issueRows = issues.map(issue => (
+  //   <IssueRow key={issue._id} issue={issue} deleteIssue={deleteIssue} />
+  // ));
 
   return (
     <div className={classes.root}>
@@ -45,18 +43,15 @@ export default function DenseTable() {
         <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell align="right">Registration</TableCell>
+              <TableCell align="right">&nbsp;Location</TableCell>
+              <TableCell align="right">&nbsp;Contacts</TableCell>
+              <TableCell align="right">&nbsp;Action</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {rows.map(row => (
-              <SaccoRow key={row.name} row={row} />
-            ))}
-          </TableBody>
+          <TableBody>{Saccorow}</TableBody>
         </Table>
       </Paper>
     </div>
