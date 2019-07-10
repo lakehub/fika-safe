@@ -1,25 +1,12 @@
-import React, { Component } from 'react';
-import 'whatwg-fetch';
-import queryString from 'query-string';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-
-import SaccoTable from './SaccoTable.jsx';
-
-export default class saccoList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
+export default class SaccoList extends Component {
   render() {
-    const { saccos } = this.state;
     return (
       <div>
-        <SaccoTable />
+        
       </div>
-    );
+    )
   }
 }
-// prop validations
