@@ -26,8 +26,8 @@ export default class SaccoList extends Component {
     console.log(id);
     fetch(`/api/saccos/${id}`, { method: 'DELETE' })
       .then(response => {
-        // response.json();
-        alert(response.message);
+        response.json();
+        // alert(response.message);
         this.loadData();
       })
       .catch(error => {

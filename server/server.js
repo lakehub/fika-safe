@@ -200,7 +200,7 @@ app.delete('/api/saccos/:id', (req, res) => {
   }
   // THE REQ.BODY IS OPTIONAL INTHE FINDBYIDANREMOVE METHOD
   Sacco.findByIdAndRemove({ _id: saccosId }).then((result) => {
-    res.json({message:`Successfully deleted the sacco`});
+    res.json(result);
   }).catch((err) => {
     console.log({ message: `Unable to delelete the saccos profile ${err}` });
   });
@@ -226,8 +226,8 @@ app.put('api/saccos/:id', (req, res) => {
 
 
 // creating a connection to mongoose
-
-mongoose.connect('mongodb://localhost/fika-safe', { useNewUrlParser: true })
+// 'mongodb://localhost/fika-safe'
+mongoose.connect(db, { useNewUrlParser: true })
   .then(() => {
     app.listen(3000, () => {
       console.log('Listening on port 3000');
