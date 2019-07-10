@@ -2,7 +2,7 @@
   "name": "fika-safe",
   "version": "1.0.0",
   "description": "A Web app that ensures the safety of bodaboda customers",
-  "main": "main.js",
+  "main": "server.js",
   "scripts": {
     "format": "prettier --write --single-quote --no-semi --print-width=120 --tab-width=2 \"src/**/*.{js,jsx} \"",
     "test": "echo \"Error: no test specified\" && exit 1",
