@@ -11,17 +11,22 @@ const useStyles = makeStyles(theme => ({
   },
   icon: {
     margin: theme.spacing(1),
-    fontSize: 32
+    fontSize: 25
   }
 }));
 
-export default function DeleteIcon() {
+export default function DeleteIcon({ id, removeSacco }) {
   const classes = useStyles();
+  //   handler fucntion
+  const onClick = () => {
+    removeSacco(id);
+    console.log(id);
+  };
 
   return (
     <Grid container>
       <Grid item xs={4}>
-        <DeleteOutlinedIcon className={classes.icon} />
+        <DeleteOutlinedIcon onClick={onClick} className={classes.icon} />
         {/* <DeleteForeverOutlinedIcon className={classes.icon} /> */}
       </Grid>
     </Grid>
