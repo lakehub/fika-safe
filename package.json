@@ -6,7 +6,7 @@
   "scripts": {
     "format": "prettier --write --single-quote --no-semi --print-width=120 --tab-width=2 \"src/**/*.{js,jsx} \"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -w dist dist/server.js",
+    "start": "nodemon -w dist dist/server.js server.js",
     "babel": "babel server.js --out-dir dist --source-maps",
     "babel-watch": "babel server.js --out-dir dist --source-maps --watch",
     "compile-server": "babel server --presets @babel/preset-env --out-dir dist --source-maps",
@@ -58,9 +58,11 @@
     "query-string": "6.7.0",
     "react": "16.8.6",
     "react-bootstrap": "1.0.0-beta.9",
+    "react-bootstrap-table": "^4.3.1",
     "react-dom": "16.8.6",
     "react-router-dom": "5.0.1",
     "source-map-support": "0.5.12",
+    "toastr": "^2.1.4",
     "whatwg-fetch": "3.0.0"
   },
   "devDependencies": {
