@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 // mongoose models    .
 
-import { Sacco, Rider } from './db.models.js';
+import { Sacco, Rider } from './db.models';
 
 
 mongoose.set('useCreateIndex', true);
@@ -226,13 +226,8 @@ app.put('api/saccos/:id', (req, res) => {
 
 
 // creating a connection to mongoose
-<<<<<<< HEAD
-
-mongoose.connect('mongodb://localhost/fika-safe', { useNewUrlParser: true })
-=======
 // 'mongodb://localhost/fika-safe'
 mongoose.connect(db, { useNewUrlParser: true })
->>>>>>> f862ba6e695a4ceb9ba34e811ac9e620ae4dfd25
   .then(() => {
     app.listen(3000, () => {
       console.log('Listening on port 3000');
