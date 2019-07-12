@@ -43,6 +43,10 @@ const saccoSchema = new Schema({
     },
 
   },
+  status: {
+    type: String,
+    required: true,
+  },
   // ....
 
 });
