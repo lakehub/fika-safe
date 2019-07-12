@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import queryString from 'query-string';
+
 // import PropTypes from 'prop-types';
 
 import SaccoTable from './SaccoTable.jsx';
+import SaccoFilter from './SaccoFilter.jsx';
 
 export default class SaccoList extends Component {
   constructor(props) {
@@ -19,6 +22,18 @@ export default class SaccoList extends Component {
   // lifecycles
   componentDidMount() {
     this.loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      this.loadData();
+    }
+  }
+
+  setFilter(query) {
+    // very important to stringify the data
+    const data_query = queryString.stringify(query);
+    this.props.history.push(`${this.props.location.pathname}?${data_query}`);
   }
 
   // deleteSacco
@@ -38,7 +53,7 @@ export default class SaccoList extends Component {
   // this function loads the load data from the database
   loadData() {
     // axios is so messsy
-    fetch(`/api/saccos`)
+    fetch(`/api/saccos${this.props.location.search}`)
       .then(response => response.json())
       .then(data => {
         // const newState = this.state.data.slice();
@@ -54,8 +69,16 @@ export default class SaccoList extends Component {
   render() {
     return (
       <div>
+
+      <SaccoFilter
+          initFilter={this.props.location}
+          setFilter={this.setFilter}
+        />
+      <div>
         {/* we can passinprops */}
         <SaccoTable data={this.state.data} deleteSacco={this.deleteSacco} />
+        
+      </div>
       </div>
     );
   }
