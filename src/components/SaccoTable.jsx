@@ -58,13 +58,14 @@ export default function SaccoTable({ data, deleteSacco }) {
             <TableRow>
               <TableCell>...</TableCell>
               <TableCell>Name</TableCell>
-              <TableCell align="right">Registration</TableCell>
-              <TableCell align="right">&nbsp;Location</TableCell>
-              <TableCell align="right">&nbsp;Contacts</TableCell>
-              <TableCell align="right">&nbsp;Id No:</TableCell>
-              <TableCell align="right">&nbsp;Status</TableCell>
-              <TableCell>Action</TableCell>
-              <TableCell>...</TableCell>
+              <TableCell align="left">Registration</TableCell>
+              <TableCell align="left">&nbsp;Location</TableCell>
+              <TableCell align="left">&nbsp;Contacts</TableCell>
+              <TableCell align="left">&nbsp;Id No:</TableCell>
+              <TableCell align="left">&nbsp;Status</TableCell>
+              <TableCell align="left">&nbsp;Created</TableCell>
+              <TableCell align="left">&nbsp;Delete</TableCell>
+              <TableCell align="left">&nbsp;Edit</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{Saccorow}</TableBody>

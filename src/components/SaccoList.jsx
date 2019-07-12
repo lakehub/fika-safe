@@ -10,12 +10,13 @@ import SaccoFilter from './SaccoFilter.jsx';
 export default class SaccoList extends Component {
   constructor(props) {
     super(props);
+    console.log(props);
 
     this.state = { data: [] };
 
-    // binding of methods
     this.loadData = this.loadData.bind(this);
     this.deleteSacco = this.deleteSacco.bind(this);
+    this.setFilter = this.setFilter.bind(this);
   }
 
   // create methods here..
@@ -32,8 +33,10 @@ export default class SaccoList extends Component {
 
   setFilter(query) {
     // very important to stringify the data
-    const data_query = queryString.stringify(query);
-    this.props.history.push(`${this.props.location.pathname}?${data_query}`);
+    const { history, location } = this.props;
+    const dataQuery = queryString.stringify(query);
+    console.log(dataQuery);
+    history.push(`${location.pathname}?${dataQuery}`);
   }
 
   // deleteSacco
@@ -56,9 +59,6 @@ export default class SaccoList extends Component {
     fetch(`/api/saccos${this.props.location.search}`)
       .then(response => response.json())
       .then(data => {
-        // const newState = this.state.data.slice();
-        // const newData = newState.concat(data);
-
         this.setState({ data });
       })
       .catch(err => {
@@ -69,17 +69,19 @@ export default class SaccoList extends Component {
   render() {
     return (
       <div>
-
-      <SaccoFilter
+        <SaccoFilter
           initFilter={this.props.location}
           setFilter={this.setFilter}
         />
-      <div>
-        {/* we can passinprops */}
-        <SaccoTable data={this.state.data} deleteSacco={this.deleteSacco} />
-        
-      </div>
+        <div>
+          {/* we can passinprops */}
+          <SaccoTable data={this.state.data} deleteSacco={this.deleteSacco} />
+        </div>
       </div>
     );
   }
 }
+
+// SaccoList.propTypes = {
+//   location: PropTypes.object.isRequired
+// };

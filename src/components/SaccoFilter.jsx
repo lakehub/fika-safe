@@ -3,25 +3,25 @@ import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import queryStrings from 'query-string';
 
+import Date from './Date.jsx';
+
 class SaccoFilter extends Component {
   constructor(props) {
     super(props);
     console.log(props);
-    const parsed_data = queryStrings.parse(this.props.initFilter.search);
+    const parsedData = queryStrings.parse(this.props.initFilter.search);
     this.state = {
       status: '',
-      dateLte: '20', // oldDate
-      dateGte: '4', // newDate
+      dateLte: '10/10/2019', // oldDate
+      dateGte: '12/05/1999', // newDate
       changed: false
     };
 
-    console.log(this.props.initFilter);
-
-    console.log(parsed_data);
+    console.log(parsedData);
 
     this.onChangeStatus = this.onChangeStatus.bind(this);
-    // this.onChangeEffortGte = this.onChangeEffortGte.bind(this);
-    // this.onChangeEffortLte = this.onChangeEffortLte.bind(this);
+    this.onChangeDateGte = this.onChangeDateGte.bind(this);
+    this.onChangeDateLte = this.onChangeDateLte.bind(this);
     this.applyFilter = this.applyFilter.bind(this);
     this.resetFilter = this.resetFilter.bind(this);
     this.clearFilter = this.clearFilter.bind(this);
@@ -36,35 +36,37 @@ class SaccoFilter extends Component {
 
   onChangeDateGte(e) {
     const range = e.target.value;
-    // requires oldDate validation regex wise
-    if (range.match(/^\d*$/gm)) {
-      this.setState({
-        dateGte: range,
-        changed: true
-      });
-    }
+    // Regex date validation
+    // if (range.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/)) {
+    this.setState({
+      dateGte: range,
+      changed: true
+    });
+    // }
   }
 
-  onChangeEffortLte(e) {
+  onChangeDateLte(e) {
     const range = e.target.value;
-    // requires newDate validation using regex
-    if (range.match(/^\d*$/gm)) {
-      this.setState({
-        dateLte: range,
-        changed: true
-      });
-    }
+    // regex date validation
+    // if (range.match(/^\d{1,2}\/\d{1,2}\/\d{4}$/)) {
+    this.setState({
+      dateLte: range,
+      changed: true
+    });
+    // }
   }
 
   clearFilter() {
+    // reset the all filter attributes to an empty object
     this.props.setFilter({});
   }
 
   applyFilter() {
+    const { status, dateLte, dateGte } = this.state;
     const filter = {};
-    if (this.state.status) filter.status = this.state.status;
-    // if (this.state.effort_gte) filter.effort_gte = this.state.effort_gte;
-    // if (this.state.effort_lte) filter.effort_lte = this.state.effort_lte;
+    if (status) filter.status = status;
+    if (dateGte) filter.dateGte = dateGte;
+    if (dateLte) filter.dateLte = dateLte;
     this.props.setFilter(filter);
   }
 
@@ -72,8 +74,8 @@ class SaccoFilter extends Component {
   resetFilter() {
     this.setState({
       status: this.props.status || '',
-      effort_gte: this.props.dateGte || '',
-      effort_lte: this.props.dateLte || '',
+      dateGte: this.props.dateGte || '',
+      dateLte: this.props.dateLte || '',
       changed: false
     });
   }
@@ -81,7 +83,7 @@ class SaccoFilter extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props)
       this.setState({
-        date: nextProps.status || '',
+        status: nextProps.status || '',
         dateGte: nextProps.dateGte || '',
         dateLte: nextProps.dateLte || '',
         changed: false
@@ -96,6 +98,7 @@ class SaccoFilter extends Component {
       <div>
         Status:
         <select value={status} onChange={this.onChangeStatus}>
+          <option value="Active">None</option>
           <option value="Active">Active</option>
           <option value="Suspended">Suspended</option>
           <option value="InActive">InActive</option>
@@ -104,6 +107,12 @@ class SaccoFilter extends Component {
         <input size={15} value={dateGte} onChange={this.onChangeDateGte} />
         &nbsp;-&nbsp;
         <input size={15} value={dateLte} onChange={this.onChangeDateLte} />
+        {/* <Date
+          dateLte={dateLte}
+          dateGte={dateGte}
+          onChangeDateGte={this.onChangeDateDte}
+          onChangeDateLte={this.onChangeDateLte}
+        /> */}
         <button onClick={this.applyFilter}>Apply</button>
         <button onClick={this.resetFilter} disabled={!this.state.changed}>
           Reset
