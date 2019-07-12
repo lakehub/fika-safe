@@ -22,6 +22,8 @@ const SaccoRow = ({ sacco, deleteSacco }) => {
       <TableCell align="left">{sacco.address}</TableCell>
       <TableCell align="left">{sacco.contacts.telephone_number}</TableCell>
       <TableCell align="left">{sacco._id}</TableCell>
+      <TableCell align="left">{sacco.status}</TableCell>
+      <TableCell align="left">{sacco.created.substr(0, 10)}</TableCell>
       <TableCell align="left">
         <DeleteIcon removeSacco={deleteSacco} id={sacco._id} />
       </TableCell>
