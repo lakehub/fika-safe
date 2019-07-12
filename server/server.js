@@ -155,7 +155,19 @@ app.delete('api/riders/:id', (req, res) => {
 // THIS IS THE SACCOS APIS
 // get all saccos
 app.get('/api/saccos', (req, res) => {
-  Sacco.find()
+  const filter = {}
+  // this is the requested date range timestamps
+  console.log(new Date(req.query.dateGte));
+  console.log(new Date(req.query.dateLte));
+
+  if (req.query.status) filter.status = req.query.status;
+
+  if (req.query.dateGte) { filter.created.$gte = new Date(req.query.dateGte); }
+  if (req.query.dateLte) { filter.created.$lte = new Date(req.query.dateLte); }
+
+
+  console.log(filter);
+  Sacco.find(filter)
     .exec()
     .then((saccos) => {
       res.status(200).json(saccos);
