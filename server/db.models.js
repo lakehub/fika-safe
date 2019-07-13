@@ -31,12 +31,8 @@ const saccoSchema = new Schema({
       required: true,
       unique: true,
     },
-    created: {
-    type: Date,
-    default: new Date(),
-  }
   },
-  
+
   about: {
     description: String,
     website: {
