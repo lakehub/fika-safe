@@ -3,7 +3,7 @@ import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from
 
 const SortDropDown = () => {
   return (
-    <MDBDropdown>
+    <MDBDropdown >
       <MDBDropdownToggle caret color="primary">
         Sort by
       </MDBDropdownToggle>
