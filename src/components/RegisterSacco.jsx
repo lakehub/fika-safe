@@ -52,8 +52,8 @@ class RegiserSacco extends Component {
                     </div>
                     <div className="form-group">
                       <div className="col-xs-6">
-                        <label htmlFor="email"><h4>Location</h4></label>
-                        <input type="text" className="form-control" name="location" id="location" placeholder="location" title="enter your insurance number" />
+                        <label htmlFor="email"><h4>Address</h4></label>
+                        <input type="text" className="form-control" name="address" id="address" placeholder="address" title="enter your adress" />
                       </div>
                     </div>
                     <div className="form-group">
@@ -62,6 +62,25 @@ class RegiserSacco extends Component {
                         <input type="text" className="form-control" id="membership" placeholder="membership" title="enter your membership" />
                       </div>
                     </div>
+                    <div className="form-group">
+                      <div className="col-xs-6">
+                        <label htmlFor="email"><h4>Status</h4></label>
+                        <input type="text" className="form-control" id="status" placeholder="status" title="status" />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <div className="col-xs-6">
+                        <label htmlFor="email"><h4>Email</h4></label>
+                        <input type="text" className="form-control" id="email" placeholder="email" title="enter your email" />
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <div className="col-xs-6">
+                        <label htmlFor="email"><h4>Phone</h4></label>
+                        <input type="text" className="form-control" id="phone" placeholder="phone" title="enter Phone Number" />
+                      </div>
+                    </div>
+           
                     
                     <div className="form-group">
                       <div className="col-xs-12">
