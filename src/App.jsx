@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SaccoList from './components/SaccoList.jsx';
 import NavBar from './components/NavBar.jsx';
 import Login from './components/Login.jsx';
+
 // import Footer from "./components/Footer.jsx";
 
 const App = ({ children }) => {

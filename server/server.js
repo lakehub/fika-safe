@@ -157,25 +157,6 @@ app.delete('api/riders/:id', (req, res) => {
 // THIS IS THE SACCOS APIS
 // get all saccos
 app.get('/api/saccos', (req, res) => {
-  // const filter = {}
-  // const { status, dateLte, dateGte } = req.query // destructuring
-
-
-
-  // if (status) filter.status = status;
-  // if (dateGte) filter.created.$gte = new Date(dateGte);
-  // if (dateLte) filter.created.$lte = new Date(dateLte);
-
-  // // created: { $gte: new Date('2012-05-16T20:54:35.630Z') };
-  // console.log(filter);
-  // Sacco.find(filter)
-  //   .exec()
-  //   .then((saccos) => {
-  //     res.status(200).json(saccos);
-  //     console.log(saccos)
-  //   }).catch((err) => {
-  //     res.send(`Internal server error${err.stack}`).status(400);
-  //   });
   const { status, dateLte, dateGte } = req.query // destructuring
   console.log(new Date(dateLte));
   console.log(new Date(dateGte));
@@ -277,7 +258,7 @@ app.put('api/saccos/:id', (req, res) => {
 
 // creating a connection to mongoose
 // 'mongodb://localhost/fika-safe'
-mongoose.connect('mongodb://localhost/fika-safe', { useNewUrlParser: true })
+mongoose.connect(db, { useNewUrlParser: true })
   .then(() => {
     app.listen(3000, () => {
       console.log('Listening on port 3000');
