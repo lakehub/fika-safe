@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 
 
-class Registration extends Component {
+class RegiserSacco extends Component {
   constructor(props){
     super(props)
     this.state = {}
@@ -21,14 +21,7 @@ class Registration extends Component {
             <div className="col-sm-10"><h1>Register</h1></div>
           </div>
           <div className="row">
-            <div className="col-sm-3">
-              <div className="text-center">
-                <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" className="avatar img-circle img-thumbnail" alt="avatar" />
-                <h6>Upload a photo</h6>
-                <input type="file" className="text-center center-block file-upload" />
-              </div><br />
-  
-            </div>
+ 
             <div className="col-sm-9">
               <ul className="nav nav-tabs">
                 <li className="active"><a data-toggle="tab" href="#home">Profile</a></li>
@@ -40,47 +33,36 @@ class Registration extends Component {
                   <form className="form" style={{margin: "80px;"}} action="##" method="post" id="registrationForm">
                     <div className="form-group">
                       <div className="col-xs-6">
-                        <label htmlFor="first_name"><h4>First name</h4></label>
+                        <label htmlFor="first_name"><h4>Sacco Name</h4></label>
                         <input type="text" className="form-control" name="first_name" id="first_name" placeholder="first name" title="enter your first name if any." />
                       </div>
                     </div>
+
                     <div className="form-group">
                       <div className="col-xs-6">
-                        <label htmlFor="last_name"><h4>Last name</h4></label>
-                        <input type="text" className="form-control" name="last_name" id="last_name" placeholder="last name" title="enter your last name if any." />
+                        <label htmlFor="phone"><h4>Registration Number</h4></label>
+                        <input type="text" className="form-control" name="registration" id="registration" placeholder="enter registration number" title="enter your phone number if any." />
                       </div>
                     </div>
                     <div className="form-group">
                       <div className="col-xs-6">
-                        <label htmlFor="phone"><h4>Phone</h4></label>
-                        <input type="text" className="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any." />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-xs-6">
-                        <label htmlFor="mobile"><h4>Motorcycle Plate Number</h4></label>
-                        <input type="text" className="form-control" name="plateNumber" id="plateNumber" placeholder="enter Plate Number" title="enter your Plate Number" />
-                      </div>
-                    </div>
-                    <div className="form-group">
-                      <div className="col-xs-6">
-                        <label htmlFor="email"><h4>Insurance</h4></label>
-                        <input type="text" className="form-control" name="insurance" id="insurance" placeholder="insurance" title="enter your insurance number" />
+                        <label htmlFor="mobile"><h4>Years of Existence</h4></label>
+                        <input type="text" className="form-control" name="existence" id="existence" placeholder="Years of Existence" title="enter your Plate Number" />
                       </div>
                     </div>
                     <div className="form-group">
                       <div className="col-xs-6">
                         <label htmlFor="email"><h4>Location</h4></label>
-                        <input type="text" className="form-control" id="location" placeholder="somewhere" title="enter a location" />
+                        <input type="text" className="form-control" name="location" id="location" placeholder="location" title="enter your insurance number" />
                       </div>
                     </div>
                     <div className="form-group">
                       <div className="col-xs-6">
-                        <label htmlFor="password"><h4>Base</h4></label>
-                        <input type="text" className="form-control" name="base" id="base" placeholder="base" title="enter your base" />
+                        <label htmlFor="email"><h4>Membership</h4></label>
+                        <input type="text" className="form-control" id="membership" placeholder="membership" title="enter your membership" />
                       </div>
                     </div>
-  
+                    
                     <div className="form-group">
                       <div className="col-xs-12">
                         <br />
@@ -104,4 +86,4 @@ class Registration extends Component {
   
 
 
-export default Registration;
+export default RegiserSacco;
