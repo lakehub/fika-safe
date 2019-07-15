@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -64,8 +65,8 @@ function SmsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <StyledTableRow key={row.number}>
+          {rows.map((row, index) => 
+            <StyledTableRow key={index} row={row}>
               <StyledTableCell component="th" scope="row">
                 {row.Number}
               </StyledTableCell>
@@ -74,7 +75,7 @@ function SmsTable() {
               <StyledTableCell align="right">{row.Date}</StyledTableCell>
               <StyledTableCell align="right">{row.Time}</StyledTableCell>
             </StyledTableRow>
-          ))}
+          )}
         </TableBody>
       </Table>
     </Paper>
