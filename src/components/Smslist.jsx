@@ -1,5 +1,6 @@
 import React from 'react';
 import SmsTable from './SmsTable.jsx';
+import SortDropDown from './SortDropDown.jsx'
 
 class SmsList extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class SmsList extends React.Component {
   render() {
     return (
       <div>
+        <SortDropDown />
         <SmsTable smsLogs={ this.state.smsLogs } />
       </div>
     );

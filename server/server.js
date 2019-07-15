@@ -5,7 +5,9 @@ import mongoose from 'mongoose';
 
 // mongoose models    .
 
-import { Sacco, Rider } from './db.models.js';
+import { Sacco, Rider } from './db.models';
+
+const _eval = require('eval');
 
 
 mongoose.set('useCreateIndex', true);
@@ -155,14 +157,62 @@ app.delete('api/riders/:id', (req, res) => {
 // THIS IS THE SACCOS APIS
 // get all saccos
 app.get('/api/saccos', (req, res) => {
-  Sacco.find()
-    .exec()
-    .then((saccos) => {
-      res.status(200).json(saccos);
-      console.log(saccos)
-    }).catch((err) => {
-      res.send(`Internal server error${err.stack}`).status(400);
-    });
+  // const filter = {}
+  // const { status, dateLte, dateGte } = req.query // destructuring
+
+
+
+  // if (status) filter.status = status;
+  // if (dateGte) filter.created.$gte = new Date(dateGte);
+  // if (dateLte) filter.created.$lte = new Date(dateLte);
+
+  // // created: { $gte: new Date('2012-05-16T20:54:35.630Z') };
+  // console.log(filter);
+  // Sacco.find(filter)
+  //   .exec()
+  //   .then((saccos) => {
+  //     res.status(200).json(saccos);
+  //     console.log(saccos)
+  //   }).catch((err) => {
+  //     res.send(`Internal server error${err.stack}`).status(400);
+  //   });
+  const { status, dateLte, dateGte } = req.query // destructuring
+  console.log(new Date(dateLte));
+  console.log(new Date(dateGte));
+  if (status) {
+    Sacco.find()
+      .where('status').equals(status)
+      .sort({ created: -1 })
+      .exec()
+      .then((saccos) => {
+        res.status(200).json(saccos);
+        console.log(saccos)
+      }).catch((err) => {
+        res.send(`Internal server error${err.stack}`).status(400);
+      });
+  } else if (dateGte && dateLte) {
+    Sacco.find()
+      .where('created').gt(new Date(dateGte)).lt(new Date(dateLte))
+      .sort({ created: -1 })
+      .exec()
+      .then((saccos) => {
+        res.status(200).json(saccos);
+        console.log(saccos)
+      }).catch((err) => {
+        res.send(`Internal server error${err.stack}`).status(400);
+      });
+  } else {
+    Sacco.find()
+      .sort({ created: -1 })
+      .exec()
+      .then((saccos) => {
+        res.status(200).json(saccos);
+        console.log(saccos)
+      }).catch((err) => {
+        res.send(`Internal server error${err.stack}`).status(400);
+      });
+  }
+
 });
 app.get('/api/saccos/:id', (req, res) => { // parameter
   let saccoId;
@@ -227,7 +277,7 @@ app.put('api/saccos/:id', (req, res) => {
 
 // creating a connection to mongoose
 // 'mongodb://localhost/fika-safe'
-mongoose.connect(db, { useNewUrlParser: true })
+mongoose.connect('mongodb://localhost/fika-safe', { useNewUrlParser: true })
   .then(() => {
     app.listen(3000, () => {
       console.log('Listening on port 3000');

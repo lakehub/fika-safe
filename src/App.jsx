@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import SaccoList from './components/SaccoList.jsx';
 import NavBar from './components/NavBar.jsx';
-import Login from './components/login.jsx';
+import Login from './components/Login.jsx';
 import SmsList from './components/Smslist.jsx';
 // import Footer from "./components/Footer.jsx";
 
@@ -28,13 +28,12 @@ const RouteApp = () => {
         <App>
           {/* children */}
           <Route path="/login" exact component={Login} />
-<<<<<<< HEAD
+
 
           <Route path="/smslogs" exact component={SmsList} />
 
-=======
           <Route path="/smslogs" exact component={SmsList} />
->>>>>>> components
+
           <Route path="/saccos" exact component={SaccoList} />
         </App>
       </Switch>

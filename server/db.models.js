@@ -33,6 +33,7 @@ const saccoSchema = new Schema({
       unique: true,
     },
   },
+
   about: {
     description: String,
     website: {
@@ -45,10 +46,11 @@ const saccoSchema = new Schema({
     },
 
   },
-  status: {
-    type: String,
-    required: true,
+  created: {
+    type: Date,
+    default: new Date(),
   },
+  status: 'string',
   // ....
 
 });
