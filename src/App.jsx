@@ -32,8 +32,6 @@ const RouteApp = () => {
 
           <Route path="/smslogs" exact component={SmsList} />
 
-          <Route path="/smslogs" exact component={SmsList} />
-
           <Route path="/saccos" exact component={SaccoList} />
         </App>
       </Switch>
