@@ -30,7 +30,7 @@ class RegiserSacco extends Component {
               <div className="tab-content">
                 <div className="tab-pane active" id="home">
                   <hr />
-                  <form className="form" style={{margin: "80px;"}} action="##" method="post" id="registrationForm">
+                  <form className="form" action="##" method="post" id="registrationForm">
                     <div className="form-group">
                       <div className="col-xs-6">
                         <label htmlFor="first_name"><h4>Sacco Name</h4></label>
