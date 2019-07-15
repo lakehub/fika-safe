@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { blue, red } from '@material-ui/core/colors';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import EditIcon from '@material-ui/icons/Edit';
+import { Tooltip, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,7 +36,11 @@ export default function SvgIcons() {
 
   return (
     <div className={classes.root}>
-      <EditIcon className={classes.icon} color="primary" />
+      <Tooltip title="Edit">
+        <IconButton aria-label="Edit">
+          <EditIcon className={classes.icon} color="primary" />
+        </IconButton>
+      </Tooltip>
     </div>
   );
 }

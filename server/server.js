@@ -7,6 +7,8 @@ import mongoose from 'mongoose';
 
 import { Sacco, Rider } from './db.models';
 
+const _eval = require('eval');
+
 
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
@@ -155,14 +157,43 @@ app.delete('api/riders/:id', (req, res) => {
 // THIS IS THE SACCOS APIS
 // get all saccos
 app.get('/api/saccos', (req, res) => {
-  Sacco.find()
-    .exec()
-    .then((saccos) => {
-      res.status(200).json(saccos);
-      console.log(saccos)
-    }).catch((err) => {
-      res.send(`Internal server error${err.stack}`).status(400);
-    });
+  const { status, dateLte, dateGte } = req.query // destructuring
+  console.log(new Date(dateLte));
+  console.log(new Date(dateGte));
+  if (status) {
+    Sacco.find()
+      .where('status').equals(status)
+      .sort({ created: -1 })
+      .exec()
+      .then((saccos) => {
+        res.status(200).json(saccos);
+        console.log(saccos)
+      }).catch((err) => {
+        res.send(`Internal server error${err.stack}`).status(400);
+      });
+  } else if (dateGte && dateLte) {
+    Sacco.find()
+      .where('created').gt(new Date(dateGte)).lt(new Date(dateLte))
+      .sort({ created: -1 })
+      .exec()
+      .then((saccos) => {
+        res.status(200).json(saccos);
+        console.log(saccos)
+      }).catch((err) => {
+        res.send(`Internal server error${err.stack}`).status(400);
+      });
+  } else {
+    Sacco.find()
+      .sort({ created: -1 })
+      .exec()
+      .then((saccos) => {
+        res.status(200).json(saccos);
+        console.log(saccos)
+      }).catch((err) => {
+        res.send(`Internal server error${err.stack}`).status(400);
+      });
+  }
+
 });
 app.get('/api/saccos/:id', (req, res) => { // parameter
   let saccoId;

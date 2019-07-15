@@ -1,13 +1,14 @@
+/* eslint-disable import/extensions */
 import ReactDOM from 'react-dom';
 import React from 'react';
 // import PropTypes from 'prop-types';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Registration from "./components/Registration.jsx"
-// importing oue components
+
 import SaccoList from './components/SaccoList.jsx';
 import NavBar from './components/NavBar.jsx';
-import Login from './components/Login.jsx'
-
+import Login from './components/Login.jsx';
+import SmsList from './components/Smslist.jsx';
+import Registration from './components/Registration.jsx'
 // import Footer from "./components/Footer.jsx";
 
 const App = ({ children }) => {
@@ -28,6 +29,9 @@ const RouteApp = () => {
         <App>
           {/* children */}
           <Route path="/login" exact component={Login} />
+
+          <Route path="/smslogs" exact component={SmsList} />
+
           <Route path="/saccos" exact component={SaccoList} />
           <Route path="/register" exact component={Registration} />
 

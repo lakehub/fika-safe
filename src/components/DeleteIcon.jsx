@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import { makeStyles } from '@material-ui/core/styles';
+import { Tooltip, IconButton } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -26,8 +27,11 @@ export default function DeleteIcon({ id, removeSacco }) {
   return (
     <Grid container>
       <Grid item xs={4}>
-        <DeleteOutlinedIcon onClick={onClick} className={classes.icon} />
-        {/* <DeleteForeverOutlinedIcon className={classes.icon} /> */}
+        <Tooltip title="Delete">
+          <IconButton aria-label="Edit" onClick={onClick}>
+            <DeleteOutlinedIcon className={classes.icon} />
+          </IconButton>
+        </Tooltip>
       </Grid>
     </Grid>
   );
