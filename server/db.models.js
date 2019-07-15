@@ -25,6 +25,7 @@ const saccoSchema = new Schema({
       type: String,
       unique: true,
       required: true,
+
     },
     telephone_number: {
       type: String,
@@ -36,6 +37,7 @@ const saccoSchema = new Schema({
   about: {
     description: String,
     website: {
+
       type: String,
       validate: {
         validator: link => link.indexOf('https://') === 0,
