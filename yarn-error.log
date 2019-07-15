@@ -1,0 +1,146 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.15.2/libexec/bin/yarn.js run dev-all
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  11.12.0
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/pato/Projo/fika-safe/package.json: Unexpected token < in JSON at position 1857
+      at JSON.parse (<anonymous>)
+      at /usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:304:30)
+      at /usr/local/Cellar/yarn/1.15.2/libexec/lib/cli.js:315:13
+
+npm manifest: 
+  {
+    "name": "fika-safe",
+    "version": "1.0.0",
+    "description": "A Web app that ensures the safety of bodaboda customers",
+    "main": "server.js",
+    "scripts": {
+      "format": "prettier --write --single-quote --no-semi --print-width=120 --tab-width=2 \"src/**/*.{js,jsx} \"",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "nodemon -w dist dist/server.js server.js",
+      "babel": "babel server.js --out-dir dist --source-maps",
+      "babel-watch": "babel server.js --out-dir dist --source-maps --watch",
+      "compile-server": "babel server --presets @babel/preset-env --out-dir dist --source-maps",
+      "watch-server": "babel server --presets @babel/preset-env --out-dir dist --source-maps --watch",
+      "compile": "webpack",
+      "build-watch": "webpack --watch",
+      "watch": "webpack-dev-server --hot --inline",
+      "dev-all": "npm run watch & npm run watch-server & npm start",
+      "lint": "eslint '**/*.{js,jsx}' --quiet",
+      "lint:fix": "eslint '**/*.{js,jsx}' --fix",
+      "lint1": "eslint --ext js,jsx src server webpack.config.js"
+    },
+    "eslintConfig": {
+      "settings": {
+        "react": {
+          "version": "999.999.999"
+        }
+      }
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Cyrus-Kiprop/fika-safe.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/Cyrus-Kiprop/fika-safe/issues"
+    },
+    "homepage": "https://github.com/Cyrus-Kiprop/fika-safe#readme",
+    "dependencies": {
+      "@fortawesome/fontawesome-svg-core": "1.2.19",
+      "@fortawesome/free-brands-svg-icons": "5.9.0",
+      "@fortawesome/free-regular-svg-icons": "5.9.0",
+      "@fortawesome/free-solid-svg-icons": "5.9.0",
+      "@fortawesome/react-fontawesome": "0.1.4",
+      "@material-ui/core": "4.0.0-rc.0",
+      "@material-ui/icons": "4.2.1",
+      "axios": "0.19.0",
+      "body-parser": "1.19.0",
+  <<<<<<< HEAD
+      "bootstrap": "3.3.7",
+  =======
+      "bootstrap": "4.3.1",
+      "error-stack-parser": "2.0.2",
+      "eval": "0.1.4",
+  >>>>>>> b299a5f26ce308ffb630e425fa21f8b4a150ae75
+      "express": "^4.17.0",
+      "json-server": "^0.15.0",
+      "jsonwebtoken": "^8.5.1",
+      "locus": "2.0.1",
+      "material-table": "1.40.1",
+      "material-ui": "0.20.2",
+  <<<<<<< HEAD
+      "mdbreact": "^4.18.0",
+  =======
+      "material-ui-search-bar": "0.4.2",
+      "mdbreact": "4.18.0",
+  >>>>>>> b299a5f26ce308ffb630e425fa21f8b4a150ae75
+      "mongodb": "^3.2.6",
+      "mongoose": "5.6.2",
+      "mongoose-unique-validator": "2.0.3",
+      "prop-types": "15.7.2",
+      "query-params-mongo": "1.1.0",
+      "query-string": "6.7.0",
+      "react": "16.8.6",
+      "react-bootstrap": "0.32.4",
+      "react-bootstrap-table": "^4.3.1",
+      "react-dom": "16.8.6",
+      "react-formal": "^1.0.0",
+      "react-formal-inputs": "^2.1.1",
+      "react-router-dom": "5.0.0",
+      "source-map-support": "0.5.12",
+      "superagent": "^5.1.0",
+      "toastr": "^2.1.4",
+      "whatwg-fetch": "3.0.0",
+      "yup": "^0.27.0"
+    },
+    "devDependencies": {
+      "@babel/cli": "7.4.4",
+      "@babel/core": "7.4.5",
+      "@babel/node": "7.4.5",
+      "@babel/preset-env": "7.4.5",
+      "@babel/preset-react": "7.0.0",
+      "babel-eslint": "10.0.2",
+      "babel-loader": "8.0.6",
+      "babel-polyfill": "^6.26.0",
+      "cli-progress": "2.1.1",
+      "eslint": "5.16.0",
+      "eslint-config-airbnb": "17.1.1",
+      "eslint-config-prettier": "6.0.0",
+      "eslint-config-react": "1.1.7",
+      "eslint-loader": "2.2.1",
+      "eslint-plugin-import": "2.18.0",
+      "eslint-plugin-jsx-a11y": "6.2.3",
+      "eslint-plugin-prettier": "3.1.0",
+      "eslint-plugin-react": "7.14.2",
+      "html-webpack-plugin": "3.2.0",
+      "nodemon": "1.19.1",
+      "prettier": "1.18.2",
+      "react-router-bootstrap": "0.25.0",
+      "webpack": "4.33.0",
+      "webpack-cli": "3.3.2",
+      "webpack-dev-middleware": "3.7.0",
+      "webpack-dev-server": "3.7.1",
+      "webpack-hot-middleware": "2.25.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

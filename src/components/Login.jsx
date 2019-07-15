@@ -27,7 +27,7 @@ export default class Login extends React.Component {
                 <CssBaseline />
                 <div className="paper">
                     <Avatar className="avatar">
-                        <AccountCircle />
+                        <img src= "/Users/pato/Downloads"/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
                         Sign in
