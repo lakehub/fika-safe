@@ -4,8 +4,8 @@ import queryString from 'query-string';
 
 // import PropTypes from 'prop-types';
 
-import SaccoTable from './SaccoTable.jsx';
-import SaccoFilter from './SaccoFilter.jsx';
+import SaccoTable from 'components/SaccoTable.jsx';
+import SaccoFilter from 'components/Filter/SaccoFilter.jsx';
 
 export default class SaccoList extends Component {
   constructor(props) {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import queryStrings from 'query-string';
 
-import Date from './Date.jsx';
+import FilterPaper from './FilterPaper.jsx';
 
 class SaccoFilter extends Component {
   constructor(props) {
@@ -12,8 +12,8 @@ class SaccoFilter extends Component {
     const parsedData = queryStrings.parse(this.props.initFilter.search);
     this.state = {
       status: '',
-      dateLte: '10/10/2019', // oldDate
-      dateGte: '12/05/1999', // newDate
+      dateLte: '2019-10-10', // oldDate
+      dateGte: '2019-10-24', // newDate
       changed: false
     };
 
@@ -96,28 +96,18 @@ class SaccoFilter extends Component {
     const { status, dateLte, dateGte } = this.state;
     return (
       <div>
-        Status:
-        <select value={status} onChange={this.onChangeStatus}>
-          <option value="Active">None</option>
-          <option value="Active">Active</option>
-          <option value="Suspended">Suspended</option>
-          <option value="InActive">InActive</option>
-        </select>
-        &nbsp;Date Created
-        <input size={15} value={dateGte} onChange={this.onChangeDateGte} />
-        &nbsp;-&nbsp;
-        <input size={15} value={dateLte} onChange={this.onChangeDateLte} />
-        {/* <Date
+        <FilterPaper
+          status={status}
           dateLte={dateLte}
           dateGte={dateGte}
-          onChangeDateGte={this.onChangeDateDte}
+          onChangeDateGte={this.onChangeDateGte}
           onChangeDateLte={this.onChangeDateLte}
-        /> */}
-        <button onClick={this.applyFilter}>Apply</button>
-        <button onClick={this.resetFilter} disabled={!this.state.changed}>
-          Reset
-        </button>
-        <button onClick={this.clearFilter}>Clear</button>
+          onChangeStatus={this.onChangeStatus}
+          applyFilter={this.applyFilter}
+          resetFilter={this.resetFilter}
+          clearFilter={this.clearFilter}
+          disabled={!this.state.changed}
+        />
       </div>
     );
   }

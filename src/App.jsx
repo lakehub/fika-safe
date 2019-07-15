@@ -29,7 +29,6 @@ const RouteApp = () => {
           {/* children */}
           <Route path="/login" exact component={Login} />
 
-
           <Route path="/smslogs" exact component={SmsList} />
 
           <Route path="/saccos" exact component={SaccoList} />

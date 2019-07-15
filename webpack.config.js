@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 const webpack = require('webpack');
-//const webpack = require('webpack')
+// const webpack = require('webpack')
 const mode = '';
 
 const config = {
@@ -17,7 +17,7 @@ const config = {
     },
     // the output filename will be hashed
     output: {
-        path: path.resolve(__dirname + '/static'),
+        path: path.resolve(`${__dirname  }/static`),
         filename: mode === 'production' ? '[name].[chunkhash].js' : '[name].[hash].js',
     },
     // bundle splitting and  splitting vendor node_modules packages into individual packages 
@@ -42,6 +42,13 @@ const config = {
                 },
             },
         },
+    },
+    resolve: {
+        modules: [path.resolve(__dirname, './src'), 'node_modules'],
+        extensions: ['.js', '.jsx', '.json'],
+        alias: {
+            reducers: path.resolve(__dirname, './src/reducers')
+        }
     },
 
     plugins: [
