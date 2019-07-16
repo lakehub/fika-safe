@@ -247,12 +247,17 @@ app.put('api/saccos/:id', (req, res) => {
   }
   const newSacco = req.body;
 
-  Sacco.findByIdAndUpdate({ _id: saccosId }, newSacco).find({ _id: saccosId }).then((updatedSacco) => {
-    res.json(updatedSacco);
-  }).catch((err) => {
-    console.log(err);
-    res.status(500).json({ message: `Unable to update the saccos information ${err}` });
-  });
+  Sacco.findByIdAndUpdate({ _id: saccosId }, newSacco,
+    {
+      returnNewDocument: true,
+      new: true,
+      strict: false
+    }).find({ _id: saccosId }).then((updatedSacco) => {
+      res.json(updatedSacco);
+    }).catch((err) => {
+      console.log(err);
+      res.status(500).json({ message: `Unable to update the saccos information ${err}` });
+    });
 });
 
 

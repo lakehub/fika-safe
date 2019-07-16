@@ -12,7 +12,7 @@ export default class SaccoList extends Component {
     super(props);
     console.log(props);
 
-    this.state = { data: [] };
+    this.state = { data: [], sortBy: 'name' };
 
     this.loadData = this.loadData.bind(this);
     this.deleteSacco = this.deleteSacco.bind(this);
@@ -37,6 +37,13 @@ export default class SaccoList extends Component {
     const dataQuery = queryString.stringify(query);
     console.log(dataQuery);
     history.push(`${location.pathname}?${dataQuery}`);
+  }
+
+  // sorting handler function
+  handleSortChange(event) {
+    this.setState({
+      sortBy: event.target.value
+    });
   }
 
   // deleteSacco
@@ -67,15 +74,24 @@ export default class SaccoList extends Component {
   }
 
   render() {
+    const { data, sortBy } = this.state;
+    const sortedData = data.sort((a, b) => (a[sortBy] > b[sortBy] ? 1 : -1));
+
     return (
       <div>
         <SaccoFilter
           initFilter={this.props.location}
           setFilter={this.setFilter}
         />
+        Sort by :
+        <select value={sortBy} onChange={this.handleSortChange.bind(this)}>
+          <option value="name">Name</option>
+          <option value="address">Address</option>
+          <option value="created">Created</option>
+        </select>
         <div>
           {/* we can passinprops */}
-          <SaccoTable data={this.state.data} deleteSacco={this.deleteSacco} />
+          <SaccoTable data={sortedData} deleteSacco={this.deleteSacco} />
         </div>
       </div>
     );

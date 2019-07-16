@@ -33,6 +33,11 @@ const saccoSchema = new Schema({
       unique: true,
     },
   },
+  membership: Number,
+  date_founded: {
+    type: Date,
+    required: true
+  },
 
   about: {
     description: String,
@@ -53,7 +58,7 @@ const saccoSchema = new Schema({
   status: 'string',
   // ....
 
-});
+}, { strict: false });
 
 // RIDER SCHEMA
 const riderSchema = new Schema({
@@ -143,7 +148,7 @@ const riderSchema = new Schema({
     ref: 'Sacco',
   },
 
-});
+}, { strict: false });
 // USING PLUGINS T
 saccoSchema.plugin(mongooseUniqueValidator);
 riderSchema.plugin(mongooseUniqueValidator);
