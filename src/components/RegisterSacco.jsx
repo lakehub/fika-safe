@@ -150,27 +150,7 @@ class RegisterSacco extends Component {
                         />
                       </div>
                     </div>
-                    <div className="form-group">
-                      <div className="col-xs-6">
-                        <label htmlFor="mobile">
-                          <h4>Year Founded</h4>
-                        </label>
-                        <input
-                          // <TextField
-                          id="date"
-                          // value={dateGte}
-                          onChange={this.defaultDate}
-                          label="End"
-                          type="date"
-                          defaultValue={new Date().toLocaleDateString('en-US')}
-                          // className={classes.textField}
-                          inputlabelprops={{
-                            shrink: true
-                          }}
-                          // />
-                        />
-                      </div>
-                    </div>
+
                     <div className="form-group">
                       <div className="col-xs-6">
                         <label htmlFor="email">
@@ -233,11 +213,10 @@ class RegisterSacco extends Component {
                     </div>
                     <div className="form-group">
                       <div className="col-xs-6">
-                        <label htmlFor="email">
+                        <label htmlFor="phone">
                           <h4>Phone</h4>
                         </label>
                         <input
-                          name="telephone_number"
                           type="text"
                           className="form-control"
                           id="phone"
@@ -248,13 +227,94 @@ class RegisterSacco extends Component {
                     </div>
 
                     <div className="form-group">
+                      <div className="col-xs-6">
+                        <label htmlFor="mobile">
+                          <h4>Year Founded</h4>
+                        </label>
+                        <input
+                          // <TextField
+                          id="date"
+                          // value={dateGte}
+                          onChange={this.defaultDate}
+                          label="End"
+                          type="date"
+                          defaultValue={new Date().toLocaleDateString('en-US')}
+                          // className={classes.textField}
+                          inputlabelprops={{
+                            shrink: true
+                          }}
+                          // />
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <div className="col-xs-6">
+                        <label htmlFor="password">
+                          <h4>Password</h4>
+                        </label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          name="password"
+                          placeholder="password"
+                          title="enter password"
+                        />
+                      </div>
+                      <div className="form-group">
+                        <div className="col-xs-6">
+                          <label htmlFor="password">
+                            <h4>Confirm Password</h4>
+                          </label>
+                          <input
+                            type="password"
+                            className="form-control"
+                            name="password"
+                            placeholder="password"
+                            title="enter password"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <div className="col-xs-6">
+                          <label htmlFor="password">
+                            <h4>Wesite Link</h4>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="website"
+                            placeholder="eg www.nduthisacco.org.co.ke"
+                            title="enter password"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="form-group">
+                        <div className="col-xs-6">
+                          <label htmlFor="password">
+                            <h4>Description</h4>
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            name="description"
+                            placeholder="Description"
+                            title="enter password"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
                       <div className="col-xs-12">
                         <br />
                         <button
                           className="btn btn-lg btn-success"
                           type="submit"
                         >
-                          <i className="glyphicon glyphicon-ok-sign" /> Save
+                          <i className="glyphicon glyphicon-ok-sign" /> Register
                         </button>
                         <button className="btn btn-lg" type="reset">
                           <i className="glyphicon glyphicon-repeat" /> Reset
