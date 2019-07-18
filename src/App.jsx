@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import SaccoList from './components/SaccoList.jsx';
 import NavBar from './components/NavBar.jsx';
 import Login from './components/Login.jsx';
-import SmsList from './components/Smslist.jsx';
+import SmsList from './components/SmsList.jsx';
 import Registration from './components/Registration.jsx'
 import RegisterSacco from './components/RegisterSacco.jsx'
 import SaccoProfile from './components/SaccoProfile.jsx';
