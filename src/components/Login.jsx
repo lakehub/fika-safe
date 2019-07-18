@@ -8,76 +8,104 @@ import Checkbox from '@material-ui/core/Checkbox';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import {Redirect} from 'react-router-dom'
 
 export default class Login extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: ''
+    };
+    console.log(props);
+  }
 
-        }
-    }
+  handleChange = event => {
+    event.preventDefault();
 
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  };
 
-    render() {
-  
-        return (
-            <div>
-        
-                <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className="paper">
-                    <Avatar className="avatar">
-                        <img src= "/Users/pato/Downloads"/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Sign in
-              </Typography>
-                    <form className="form"  noValidate>
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
-                            autoComplete="username"
-                            autoFocus
-                        />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
-                        <FormControlLabel
-                            control={<Checkbox value="remember" color="primary" />}
-                            label="Remember me"
-                        />
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            style={{backgroundColor: '#009688'}}
-                            className="submit"
+  // handles the submit button
+  handleSubmit = event => {
+    event.preventDefault();
+    const data = this.state;
+    this.submitCredentials(data);
+  };
 
-                        >
-                            Login
-                </Button>
+  submitCredentials = credentials => {
+    fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(credentials)
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+    const {history } =this.props;
+    history.push(`/saccos`);
 
-                    </form>
-                </div>
+  };
 
-            </Container>
-        
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <div className="paper">
+            <Avatar className="avatar">
+              <img src="/Users/pato/Downloads" />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <form onSubmit={this.handleSubmit} className="form" noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="username"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleChange}
+                label="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                value={this.state.password}
+                onChange={this.handleChange}
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                style={{ backgroundColor: '#009688' }}
+                className="submit"
+              >
+                Login
+              </Button>
+            </form>
+          </div>
+        </Container>
+      </div>
+    );
+  }
 }
-
-

@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 
 // mongoose models    .
 
-import { Sacco, Rider } from './db.models';
+import { Sacco, Rider, UserModel } from './db.models.js';
 
 const _eval = require('eval');
 
@@ -43,6 +43,34 @@ app.use(bodyParser.json());
 // OUR SERVER CODE WILL GO HERE
 
 // BASIC CRUD APIS
+// admin login endpoint
+app.post("/api/register", async (request, response) => {
+  try {
+    const user = new UserModel(request.body);
+    const result = await user.save();
+    response.send(result);
+  } catch (error) {
+    response.status(500).send(error.message);
+  }
+});
+
+app.post("/api/login", async (request, response) => {
+  try {
+    const user = await UserModel.findOne({ username: request.body.username }).exec();
+    if (!user) {
+      return response.status(400).send({ message: "The username does not exist" });
+    }
+    user.comparePassword(request.body.password, function (error, match) {
+      if (!match) {
+        return response.status(400).send({ message: "The password is invalid" });
+      }
+    });
+    response.send({ message: "The username and password combination is correct!" });
+  } catch (error) {
+    response.status(500).send(error);
+  }
+});
+
 
 app.get('/', (req, res) => {
   res.json('this is our first server page');
@@ -204,7 +232,7 @@ app.get('/api/saccos/:id', (req, res) => { // parameter
   }
 
   Sacco.findById({ _id: saccoId }).then((sacco) => {
-    res.json(sacco).status(200);
+    res.json(sacco).status(200);// this a single object rbeing returned
   }).catch((err) => {
     res.send(`Internal server error${err.stack}`).status(400);
   });

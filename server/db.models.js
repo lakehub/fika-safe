@@ -4,6 +4,32 @@ import yup from "yup";
 // UNIQUE PROPERTY VALIDATOR
 const mongooseUniqueValidator = require("mongoose-unique-validator");
 
+// SUPER ADMIN SCHEMA
+const UserSchema = new Schema({
+  username: String,
+  password: String
+});
+
+// pre save functiion
+UserSchema.pre("save", function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+  this.password = bcrypt.hashSync(this.password, 10);
+  next();
+});
+
+// compare passwords
+UserSchema.methods.comparePassword = function (plaintext, callback) {
+  return callback(null, bcrypt.compareSync(plaintext, this.password));
+};
+
+UserSchema.methods.comparePassword = (plaintext, callback) => { };
+
+
+
+
+
 // SCHEMA BLUEPRINTS
 const saccoSchema = yup.object().shape(
   {
@@ -112,12 +138,14 @@ riderSchema.plugin(mongooseUniqueValidator);
 
 // CREATING AND SAVING MONGOOSE MODEL
 // THIS CAN ALSO BE EXPORTED TO ANOTHER MODULARISED FILE
-const Sacco = mongoose.model("Sacco", saccoSchema);
-const Rider = mongoose.model("Rider", riderSchema);
+const Sacco = mongoose.model('Sacco', saccoSchema);
+const Rider = mongoose.model('Rider', riderSchema);
+const UserModel = mongoose.model("user", UserSchema);
 
 // ++INSERTING SOME DATA INTO THE DATABASE++
 
 module.exports = {
   Sacco,
-  Rider
+  Rider,
+  UserModel
 };
