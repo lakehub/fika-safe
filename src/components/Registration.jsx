@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SmsList from './SmsList'
+import SmsList from './Smslist'
 
 
 
